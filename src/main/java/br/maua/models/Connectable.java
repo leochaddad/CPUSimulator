@@ -1,32 +1,86 @@
 package br.maua.models;
 
+import br.maua.interfaces.Notifiable;
+
 import java.util.ArrayList;
 
-public abstract class Connectable {
+public abstract class Connectable implements Notifiable {
 
-    private ArrayList<Connectable> connectedTo = new ArrayList<>();
-    private Data incomingOutcomingData = new Data();
+    /**
+     * List of connections to the object
+     */
+    protected ArrayList<Connection> connections = new ArrayList<>();
 
-    public ArrayList<Connectable> getConnectedTo() {
-        return connectedTo;
+    /**
+     * Data external to the object
+     */
+    protected Data externalData = new Data();
+
+    /**
+     * Getter for list of connections
+     * @return List of connections to the object
+     */
+    public ArrayList<Connection> getConnections() {
+        return connections;
     }
 
-    public void setIncomingOutcomingData(Data incomingOutcomingData) {
-        this.incomingOutcomingData = incomingOutcomingData;
-        for(Connectable connected:this.getConnectedTo()){
-            if(!connected.getIncomingOutcomingData().equals(this.getIncomingOutcomingData()))
-            connected.setIncomingOutcomingData(this.getIncomingOutcomingData());
+    /**
+     * For internal use
+     * @return List of Connectable objects connected to this
+     */
+    private ArrayList<Connectable> getConnectedElements() {
+        ArrayList<Connectable> connectedElements = new ArrayList<>();
+        for(Connection connection:this.getConnections()){
+            connectedElements.add(connection.getConnectedElement());}
+        return connectedElements;
+    }
+
+    /**
+     * Sets external data of the object and all others with an external connection
+     * @param externalData Data to be set as external
+     */
+    public void setExternalData(Data externalData) {
+        this.externalData = externalData;
+        for(Connection connection:this.getConnections()){
+            if(connection.isExternalConnection()
+                    &!connection.getConnectedElement().getExternalData().equals(this.getExternalData())){
+                connection.getConnectedElement().setExternalData(this.getExternalData());
+            }
+
+            else{
+                connection.getConnectedElement().notifyChange();
+            }
         }
     }
 
-    public Data getIncomingOutcomingData() {
-        return incomingOutcomingData;
+    /**
+     * Getter method for external data
+     * @return External Data to the object
+     */
+    public Data getExternalData() {
+        return externalData;
     }
 
+    /**
+     * Creates new connection (if it doesn't exist)
+     * Adds to this objects connections and to the object being connected
+     * @param connectableElement Element to be connected
+     */
+    public void connectTo(Connectable connectableElement, boolean externalConnection){
+        if(!this.getConnectedElements().contains(connectableElement)){
+            this.connections.add(new Connection(connectableElement, externalConnection));
+            connectableElement.connectTo(this);
+        }
+    }
 
+    /**
+     * Creates new connection (if it doesn't exist) external by default
+     * Adds to this objects connections and to the object being connected
+     * @param connectableElement Element to be connected
+     */
     public void connectTo(Connectable connectableElement){
-        if(!this.connectedTo.contains(connectableElement)){
-            this.connectedTo.add(connectableElement);
+        if(!this.getConnectedElements().contains(connectableElement)){
+            this.connections.add(new Connection(connectableElement));
             connectableElement.connectTo(this);
         }
     }

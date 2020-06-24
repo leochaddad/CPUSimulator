@@ -1,7 +1,7 @@
 package br.maua;
 
+import br.maua.models.Alu;
 import br.maua.models.Bus;
-import br.maua.models.Data;
 import br.maua.models.Register;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -38,21 +38,18 @@ public class App extends Application {
         Register registerA = new Register("000000000010");
         Register registerB = new Register("000000001000");
         Bus bus = new Bus();
-
-        registerA.connectTo(bus);
-        registerB.connectTo(bus);
+        Alu alu = new Alu(registerA,registerB);
 
         System.out.println(registerA.getInternalData());
         System.out.println(registerB.getInternalData());
 
-        System.out.println(registerA.getIncomingOutcomingData());
-        System.out.println(registerB.getIncomingOutcomingData());
-        System.out.println(bus.getIncomingOutcomingData());
-        registerA.out();
-        registerB.out();
-        System.out.println(registerA.getIncomingOutcomingData());
-        System.out.println(registerB.getIncomingOutcomingData());
-        System.out.println(bus.getIncomingOutcomingData());
+        System.out.println(registerA.getExternalData());
+        System.out.println(registerB.getExternalData());
+        System.out.println(bus.getExternalData());
+
+        System.out.println(registerA.getExternalData());
+        System.out.println(registerB.getExternalData());
+        System.out.println(" "+bus.getExternalData());
 
         System.out.println(registerA.getInternalData());
         System.out.println(registerB.getInternalData());

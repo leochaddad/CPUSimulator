@@ -1,5 +1,11 @@
 package br.maua.models;
 
-public class Bus extends Connectable {
+import br.maua.interfaces.Notifiable;
 
+public class Bus extends Connectable implements Notifiable {
+
+    @Override
+    public void notifyChange() {
+
+    }
 }
