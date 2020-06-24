@@ -3,11 +3,20 @@ package br.maua.models;
 import java.util.ArrayList;
 
 public abstract class Connectable {
-    private ArrayList<Connectable> connectedTo = new ArrayList<>();
-    private Data incomingData = new Data();
 
-    public Data getIncomingData() {
-        return incomingData;
+    private ArrayList<Connectable> connectedTo = new ArrayList<>();
+    private Data incomingOutcomingData = new Data();
+
+    public ArrayList<Connectable> getConnectedTo() {
+        return connectedTo;
+    }
+
+    public void setIncomingOutcomingData(Data incomingOutcomingData) {
+        this.incomingOutcomingData = incomingOutcomingData;
+    }
+
+    public Data getIncomingOutcomingData() {
+        return incomingOutcomingData;
     }
 
 

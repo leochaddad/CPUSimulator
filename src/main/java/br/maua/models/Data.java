@@ -24,7 +24,7 @@ public final class Data {
     }
 
 
-    public void Add(Data dataToAdd){
+    public void add(Data dataToAdd){
         StringBuilder bitWiseSum = new StringBuilder();
         for(int i = 0; i< dataSize; i++){
             bitWiseSum.append(Integer.parseInt(String.valueOf(this.data.charAt(i))) |

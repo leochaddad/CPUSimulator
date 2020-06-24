@@ -35,10 +35,10 @@ public class App extends Application {
 
     public static void main(String[] args) {
         Register registerA = new Register();
-        System.out.println(registerA.getInternalData().toString());
+        Register registerB = new Register();
+        registerA.connectTo(registerB);
 
-
-        launch();
+        //launch();
     }
 
 }
