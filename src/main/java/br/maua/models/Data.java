@@ -24,19 +24,18 @@ public final class Data {
     }
 
 
-    public void add(Data dataToAdd){
+    public Data add(Data dataToAdd){
         StringBuilder bitWiseSum = new StringBuilder();
         for(int i = 0; i< dataSize; i++){
             bitWiseSum.append(Integer.parseInt(String.valueOf(this.data.charAt(i))) |
                     Integer.parseInt(String.valueOf(dataToAdd.data.charAt(i))));
         }
-        this.data = bitWiseSum.toString();
+        return new Data(bitWiseSum.toString());
     }
 
 
     @Override
     public String toString() {
         return data + "  "+ this.getDecimalData();
-
     }
 }

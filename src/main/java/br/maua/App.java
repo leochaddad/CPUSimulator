@@ -1,5 +1,6 @@
 package br.maua;
 
+import br.maua.models.Bus;
 import br.maua.models.Data;
 import br.maua.models.Register;
 import javafx.application.Application;
@@ -34,9 +35,27 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
-        Register registerA = new Register();
-        Register registerB = new Register();
-        registerA.connectTo(registerB);
+        Register registerA = new Register("000000000010");
+        Register registerB = new Register("000000001000");
+        Bus bus = new Bus();
+
+        registerA.connectTo(bus);
+        registerB.connectTo(bus);
+
+        System.out.println(registerA.getInternalData());
+        System.out.println(registerB.getInternalData());
+
+        System.out.println(registerA.getIncomingOutcomingData());
+        System.out.println(registerB.getIncomingOutcomingData());
+        System.out.println(bus.getIncomingOutcomingData());
+        registerA.out();
+        registerB.out();
+        System.out.println(registerA.getIncomingOutcomingData());
+        System.out.println(registerB.getIncomingOutcomingData());
+        System.out.println(bus.getIncomingOutcomingData());
+
+        System.out.println(registerA.getInternalData());
+        System.out.println(registerB.getInternalData());
 
         //launch();
     }

@@ -2,6 +2,11 @@ package br.maua.models;
 
     public class Register extends Connectable{
 
+        //Constructor for testing purposes only
+        public Register(String internalData) {
+            this.internalData = new Data(internalData);
+        }
+
         public Data getInternalData() {
             return internalData;
         }
@@ -12,9 +17,6 @@ package br.maua.models;
             internalData = getIncomingOutcomingData();
         }
         public void out(){
-            this.getIncomingOutcomingData().add(this.internalData);
-            for(Connectable connected:this.getConnectedTo()){
-                connected.setIncomingOutcomingData(this.getIncomingOutcomingData());
-            }
+            setIncomingOutcomingData(this.getIncomingOutcomingData().add(this.internalData));
         }
     }

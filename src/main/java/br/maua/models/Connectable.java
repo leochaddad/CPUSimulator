@@ -13,6 +13,10 @@ public abstract class Connectable {
 
     public void setIncomingOutcomingData(Data incomingOutcomingData) {
         this.incomingOutcomingData = incomingOutcomingData;
+        for(Connectable connected:this.getConnectedTo()){
+            if(!connected.getIncomingOutcomingData().equals(this.getIncomingOutcomingData()))
+            connected.setIncomingOutcomingData(this.getIncomingOutcomingData());
+        }
     }
 
     public Data getIncomingOutcomingData() {
