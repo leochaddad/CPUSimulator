@@ -1,6 +1,7 @@
 package br.maua;
 
 import br.maua.models.Alu;
+import br.maua.models.Buffer;
 import br.maua.models.Bus;
 import br.maua.models.Register;
 import javafx.application.Application;
@@ -35,24 +36,66 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
-        Register registerA = new Register("000000000010");
-        Register registerB = new Register("000000001000");
+
+        Register registerA = new Register("000000101111");
+        Register registerB = new Register("000000111000");
+        Register registerC = new Register("000000000000");
         Bus bus = new Bus();
         Alu alu = new Alu(registerA,registerB);
+        Buffer bufferA = new Buffer();
+        Buffer bufferB = new Buffer();
+        Buffer bufferC = new Buffer();
+        registerC.connectTo(alu);
+        registerA.connectTo(bufferA);
+        registerB.connectTo(bufferB);
+        registerC.connectTo(bufferC);
+        bufferA.connectTo(bus);
+        bufferB.connectTo(bus);
+        bufferC.connectTo(bus);
 
-        System.out.println(registerA.getInternalData());
-        System.out.println(registerB.getInternalData());
+        bufferA.setEnabled(false);
+        bufferB.setEnabled(false);
+        bufferC.setEnabled(false);
 
-        System.out.println(registerA.getExternalData());
-        System.out.println(registerB.getExternalData());
-        System.out.println(bus.getExternalData());
+        registerA.outputEnable(true);
+        registerB.outputEnable(true);
+        registerC.latchInput();
 
-        System.out.println(registerA.getExternalData());
-        System.out.println(registerB.getExternalData());
-        System.out.println(" "+bus.getExternalData());
+        System.out.println("C int exp 103 " +registerC.getInternalData());
+        System.out.println("B int 56 "  +registerB.getInternalData());
+        System.out.println("A int 47 "  +registerA.getInternalData());
+        System.out.println("BUS: 0 "+ bus.getExternalData());
+        System.out.println("ALU 103 "+ alu.getExternalData());
 
-        System.out.println(registerA.getInternalData());
-        System.out.println(registerB.getInternalData());
+        registerB.outputEnable(false);
+        registerA.outputEnable(false);
+        bufferB.setEnabled(true);
+        bufferC.setEnabled(true);
+        registerC.outputEnable(true);
+        registerA.outputEnable(true);
+
+        registerB.latchInput();
+
+
+        System.out.println("C int exp 103 " +registerC.getInternalData());
+        System.out.println("B int 103 "  +registerB.getInternalData());
+        System.out.println("A int 47 "  +registerA.getInternalData());
+        System.out.println("BUS: 103 "+ bus.getExternalData());
+        System.out.println("ALU 150 "+ alu.getExternalData());
+
+        bufferC.setEnabled(false);
+        registerB.outputEnable(true);
+        registerA.outputEnable(true);
+        registerC.latchInput();
+
+
+        System.out.println("C int " +registerC.getInternalData());
+        System.out.println("B int"  +registerB.getInternalData());
+        System.out.println("A int"  +registerA.getInternalData());
+        System.out.println("BUS: "+ bus.getExternalData());
+        System.out.println("ALU "+ alu.getExternalData());
+
+
 
         //launch();
     }

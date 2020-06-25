@@ -14,7 +14,7 @@ public abstract class Connectable implements Notifiable {
     /**
      * Data external to the object
      */
-    protected Data externalData = new Data();
+    protected Data externalData = new Data("000000000000");
 
     /**
      * Getter for list of connections
@@ -42,12 +42,13 @@ public abstract class Connectable implements Notifiable {
     public void setExternalData(Data externalData) {
         this.externalData = externalData;
         for(Connection connection:this.getConnections()){
-            if(connection.isExternalConnection()
-                    &!connection.getConnectedElement().getExternalData().equals(this.getExternalData())){
+            if(connection.isExternalConnection()&
+                    !connection.getConnectedElement().getExternalData().getData().equals(this.getExternalData().getData())){
                 connection.getConnectedElement().setExternalData(this.getExternalData());
             }
 
             else{
+                this.externalData = externalData;
                 connection.getConnectedElement().notifyChange();
             }
         }
@@ -69,7 +70,7 @@ public abstract class Connectable implements Notifiable {
     public void connectTo(Connectable connectableElement, boolean externalConnection){
         if(!this.getConnectedElements().contains(connectableElement)){
             this.connections.add(new Connection(connectableElement, externalConnection));
-            connectableElement.connectTo(this);
+            connectableElement.connectTo(this,externalConnection);
         }
     }
 

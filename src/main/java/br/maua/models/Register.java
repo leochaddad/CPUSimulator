@@ -10,6 +10,11 @@ public class Register extends Connectable implements Notifiable {
         }
 
         /**
+         * used by outputEnable()
+         */
+        boolean outputEnabled = false;
+
+        /**
          * Getter for register's internal data
          * @return internalData
          */
@@ -22,16 +27,31 @@ public class Register extends Connectable implements Notifiable {
          */
         private Data internalData = new Data("000000011000");
 
-        public void in(){
-            internalData = getExternalData();
+        /**
+         * Disables output from this register and latches on external data
+         */
+            public void latchInput(){
+                this.outputEnable(false);
+                internalData.setData(getExternalData().getData());
+            }
+
+        /**
+         * Enables or disables output
+         * @param enable
+         */
+            public void outputEnable(boolean enable){
+                if (!outputEnabled&enable) {
+                    outputEnabled = true;
+                    setExternalData(this.getExternalData().add(this.internalData));
+                }
+                else if(!enable&outputEnabled){
+                    outputEnabled = false;
+                    setExternalData(this.getExternalData().remove(this.internalData));
+                }
+            }
+
+        @Override
+        public void notifyChange() {
+
         }
-
-        public void out(){
-            setExternalData(this.getExternalData().add(this.internalData));
-        }
-
-    @Override
-    public void notifyChange() {
-
-    }
 }
