@@ -2,8 +2,6 @@ package br.maua.models;
 
 public class Alu extends Connectable {
 
-
-
     private Connectable inputConnectionA;
     private Connectable inputConnectionB;
     private boolean flagZero;

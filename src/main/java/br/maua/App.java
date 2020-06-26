@@ -1,9 +1,6 @@
 package br.maua;
 
-import br.maua.models.Alu;
-import br.maua.models.Bus;
-import br.maua.models.Counter;
-import br.maua.models.Register;
+import br.maua.models.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -54,26 +51,23 @@ public class App extends Application {
         registerC.connectToBuffered(bus);
         programCounter.connectToBuffered(bus);
 
+        Memory memory = new Memory(16, registerA,programCounter);
+        memory.connectTo(bus);
         registerA.Control(false,true,false);
 
-        registerB.Control(false,true,false);
+        memory.Control(false,true);
 
-        registerC.Control(false,false,true);
+        programCounter.Control(false,true, false, true);
 
-        registerC.Control(true, true, false);
+        memory.Control(true,false);
 
-        programCounter.Control(false,false, true, false);
 
-        programCounter.Control(false, true, false, true);
-
-        programCounter.Control(true, true, false, false);
-
-        programCounter.Control(false, true, false, true);
-
+        memory.Show();
         System.out.println("PC " +programCounter.getOutcomingData());
+        System.out.println("Memory " +memory.getOutcomingData());
         System.out.println("C int exp 103 " +registerC.getInternalData());
         System.out.println("B int 56 "  +registerB.getInternalData());
-        System.out.println("A int 47 "  +registerA.getInternalData());
+        System.out.println("A int 47 "  +registerA.getOutcomingData());
         System.out.println("BUS: 0 "+ bus.getOutcomingData());
         System.out.println("ALU 103 "+ alu.getOutcomingData());
 

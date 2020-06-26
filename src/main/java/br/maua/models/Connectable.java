@@ -65,10 +65,7 @@ public abstract class Connectable implements Observer {
     }
 
     public boolean isConnectedTo(Connectable connectable){
-        if (this.outputs.contains(connectable)){
-            return true;
-        }
-        else return false;
+        return this.outputs.contains(connectable);
     }
 
 
