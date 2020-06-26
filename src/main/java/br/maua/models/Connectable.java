@@ -1,5 +1,6 @@
 package br.maua.models;
 
+import br.maua.interfaces.Controlled;
 import br.maua.interfaces.Observer;
 
 import java.util.ArrayList;

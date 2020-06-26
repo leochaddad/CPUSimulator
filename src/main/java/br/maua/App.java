@@ -2,6 +2,7 @@ package br.maua;
 
 import br.maua.models.Alu;
 import br.maua.models.Bus;
+import br.maua.models.Counter;
 import br.maua.models.Register;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -37,8 +38,9 @@ public class App extends Application {
     public static void main(String[] args) throws Exception {
 
         Register registerA = new Register("000000101111");
-        Register registerB = new Register("000000111000");
+        Register registerB = new Register("000000000001");
         Register registerC = new Register("000000000000");
+        Counter  programCounter = new Counter("000000000000");
         Bus bus = new Bus();
         Alu alu = new Alu(registerA,registerB);
 
@@ -46,28 +48,29 @@ public class App extends Application {
         bus.connectTo(registerA);
         bus.connectTo(registerB);
         bus.connectTo(registerC);
+        bus.connectTo(programCounter);
         registerA.connectToBuffered(bus);
         registerB.connectToBuffered(bus);
         registerC.connectToBuffered(bus);
+        programCounter.connectToBuffered(bus);
 
-        registerA.outputEnable(true);
-        registerB.outputEnable(true);
+        registerA.Control(false,true,false);
 
-        registerC.latchInput();
+        registerB.Control(false,true,false);
 
-        registerC.bufferEnable(true);
-        registerC.outputEnable(true);
+        registerC.Control(false,false,true);
 
-        registerB.outputEnable(false);
-        registerB.latchInput();
+        registerC.Control(true, true, false);
 
-        registerB.outputEnable(true);
-        registerC.outputEnable(false);
-        registerC.latchInput();
+        programCounter.Control(false,false, true, false);
 
+        programCounter.Control(false, true, false, true);
 
+        programCounter.Control(true, true, false, false);
 
-        System.out.println("B int 56 "  +registerB.getInternalData());
+        programCounter.Control(false, true, false, true);
+
+        System.out.println("PC " +programCounter.getOutcomingData());
         System.out.println("C int exp 103 " +registerC.getInternalData());
         System.out.println("B int 56 "  +registerB.getInternalData());
         System.out.println("A int 47 "  +registerA.getInternalData());

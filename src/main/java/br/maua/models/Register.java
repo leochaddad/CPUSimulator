@@ -8,7 +8,7 @@ public class Register extends Connectable  {
         }
 
         Connectable bufferedConnection;
-        private boolean bufferEnabled = false;
+        protected boolean bufferEnabled = false;
         boolean outputEnabled = false;
 
     /**
@@ -22,11 +22,8 @@ public class Register extends Connectable  {
             }
             if(BE^bufferEnabled){
                 bufferEnable(BE);
-                System.out.println("BE: "+BE);
-                System.out.println("Buffer: "+bufferEnabled);
             }
             if(IN){
-                System.out.println("IN Buffer: "+bufferEnabled);
                 latchInput();
             }
         }
