@@ -1,27 +1,24 @@
 package br.maua.models;
 
 public class Alu extends Connectable {
-    Connection inputConnectionA;
-    Connection inputConnectionB;
+    Connectable inputConnectionA;
+    Connectable inputConnectionB;
 
-    public Alu(Connectable inputA, Connectable inputB) {
-        this.connectTo(inputA,false);
-        inputConnectionA = connections.get(0);
-        this.connectTo(inputB,false);
-        inputConnectionB = connections.get(1);
+    public Alu(Connectable inputConnectionA, Connectable inputConnectionB) {
+        this.inputConnectionA = inputConnectionA;
+        this.inputConnectionB = inputConnectionB;
+        inputConnectionA.connectTo(this);
+        inputConnectionB.connectTo(this);
     }
 
-    public void sumOperation(){
-        this.getExternalData().setFromDecimal(inputConnectionA.getConnectedElement().getExternalData().getDecimalData() +
-                inputConnectionB.getConnectedElement().getExternalData().getDecimalData());
-        this.setExternalData(this.getExternalData());
+    private void sumOperation(){
+        this.getOutcomingData().setFromDecimal(inputConnectionA.getOutcomingData().getDecimalData() +
+                inputConnectionB.getOutcomingData().getDecimalData());
+        this.setOutDataAndNotify(this.getOutcomingData());
     }
 
 
-    @Override
-    public void notifyChange() {
+    public void Update() {
         sumOperation();
     }
-
-
 }

@@ -10,6 +10,10 @@ public final class Data {
         this.data = data;
     }
 
+    public Data(){
+        this.data = "0".repeat(dataSize);
+    }
+
     public void setFromDecimal(Integer data) {
         String binString = Integer.toBinaryString(data);
         while (binString.length() < dataSize) {
@@ -17,6 +21,7 @@ public final class Data {
         }
         this.data = binString;
     }
+
 
     private String data = "000000000000";
 
@@ -63,6 +68,11 @@ public final class Data {
                    (Integer.parseInt(String.valueOf(dataToRemove.data.charAt(i))) ^ 1));
         }
         return new Data(bitWiseRm.toString());
+    }
+
+    public Data clear(){
+        this.setData("0".repeat(dataSize));
+        return this;
     }
 
 

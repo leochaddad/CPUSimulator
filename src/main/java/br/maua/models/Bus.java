@@ -1,11 +1,11 @@
 package br.maua.models;
 
-import br.maua.interfaces.Notifiable;
+public class Bus extends Connectable  {
 
-public class Bus extends Connectable implements Notifiable {
-
-    @Override
-    public void notifyChange() {
-
+    public void Update() {
+        this.setOutDataAndNotify(this.getOutcomingData().clear());
+        for(Connectable input:inputs){
+            this.setOutDataAndNotify(this.getOutcomingData().add(input.getOutcomingData()));
+        }
     }
 }

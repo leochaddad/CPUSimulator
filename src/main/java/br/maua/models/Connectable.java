@@ -1,89 +1,74 @@
 package br.maua.models;
 
-import br.maua.interfaces.Notifiable;
+import br.maua.interfaces.Observer;
 
 import java.util.ArrayList;
 
-public abstract class Connectable implements Notifiable {
+public abstract class Connectable implements Observer {
 
     /**
-     * List of connections to the object
+     * Data being outputted
      */
-    protected ArrayList<Connection> connections = new ArrayList<>();
+    private Data outcomingData = new Data("000000000000");
+
 
     /**
-     * Data external to the object
+     * List of objects connected
      */
-    protected Data externalData = new Data("000000000000");
+    protected ArrayList<Connectable> inputs = new ArrayList<>();
+    protected ArrayList<Connectable> outputs = new ArrayList<>();
+
 
     /**
-     * Getter for list of connections
-     * @return List of connections to the object
+     * sets the outcomming data and alerts outputs of change
+     * @param data new data
      */
-    public ArrayList<Connection> getConnections() {
-        return connections;
+    protected void setOutDataAndNotify(Data data) {
+        if(!this.outcomingData.getData().equals(data.getData()))
+        this.outcomingData = data;
+        notifyObservers();
+    }
+
+    public Data getOutcomingData() {
+        return outcomingData;
     }
 
     /**
-     * For internal use
-     * @return List of Connectable objects connected to this
+     *Alerts outputs of change
      */
-    private ArrayList<Connectable> getConnectedElements() {
-        ArrayList<Connectable> connectedElements = new ArrayList<>();
-        for(Connection connection:this.getConnections()){
-            connectedElements.add(connection.getConnectedElement());}
-        return connectedElements;
-    }
-
-    /**
-     * Sets external data of the object and all others with an external connection
-     * @param externalData Data to be set as external
-     */
-    public void setExternalData(Data externalData) {
-        this.externalData = externalData;
-        for(Connection connection:this.getConnections()){
-            if(connection.isExternalConnection()&
-                    !connection.getConnectedElement().getExternalData().getData().equals(this.getExternalData().getData())){
-                connection.getConnectedElement().setExternalData(this.getExternalData());
-            }
-
-            else{
-                this.externalData = externalData;
-                connection.getConnectedElement().notifyChange();
-            }
+    private void notifyObservers() {
+        for(Observer observer:outputs){
+            observer.Update();
         }
     }
 
     /**
-     * Getter method for external data
-     * @return External Data to the object
+     * Creates new connection (if not one already)
+     * @param output element to be connected
      */
-    public Data getExternalData() {
-        return externalData;
+    public void connectTo(Connectable output){
+        this.outputs.add(output);
+        output.inputs.add(this);
+        notifyObservers();
     }
 
-    /**
-     * Creates new connection (if it doesn't exist)
-     * Adds to this objects connections and to the object being connected
-     * @param connectableElement Element to be connected
-     */
-    public void connectTo(Connectable connectableElement, boolean externalConnection){
-        if(!this.getConnectedElements().contains(connectableElement)){
-            this.connections.add(new Connection(connectableElement, externalConnection));
-            connectableElement.connectTo(this,externalConnection);
+    public void disconnectFrom(Connectable output) throws Exception {
+        if(output.inputs.contains(this)&this.outputs.contains(output)){
+            output.inputs.remove(this);
+            this.outputs.remove(output);
+            notifyObservers();
+        }
+        else {
+            throw new Exception("OBJECT IS NOT PROPERLY CONNECTED");
         }
     }
 
-    /**
-     * Creates new connection (if it doesn't exist) external by default
-     * Adds to this objects connections and to the object being connected
-     * @param connectableElement Element to be connected
-     */
-    public void connectTo(Connectable connectableElement){
-        if(!this.getConnectedElements().contains(connectableElement)){
-            this.connections.add(new Connection(connectableElement));
-            connectableElement.connectTo(this);
+    public boolean isConnectedTo(Connectable connectable){
+        if (this.outputs.contains(connectable)){
+            return true;
         }
+        else return false;
     }
+
 
 }

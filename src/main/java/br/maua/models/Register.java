@@ -1,12 +1,38 @@
 package br.maua.models;
 
-import br.maua.interfaces.Notifiable;
-
-public class Register extends Connectable implements Notifiable {
+public class Register extends Connectable  {
 
         //Constructor for testing purposes only
         public Register(String internalData) {
             this.internalData = new Data(internalData);
+        }
+
+        Connectable bufferedConnection;
+        private boolean bufferEnabled = false;
+
+    /**
+     * Sets the buffered connection
+     * @param connectable bufferedConnection
+     */
+        public void connectToBuffered(Connectable connectable){
+            bufferedConnection = connectable;
+        }
+
+    /**
+     * Adds or removes bufferedConnection from outputs
+     * @param enabled
+     */
+        public void bufferEnable(boolean enabled) throws Exception {
+            if (enabled){
+                this.connectTo(bufferedConnection);
+                bufferEnabled = true;
+            }else if (bufferEnabled){
+                this.disconnectFrom(bufferedConnection);
+                bufferedConnection.Update();
+            }
+            else {
+                throw new Exception("BUFFER IS ALREADY DISABLED");
+            }
         }
 
         /**
@@ -30,9 +56,18 @@ public class Register extends Connectable implements Notifiable {
         /**
          * Disables output from this register and latches on external data
          */
-            public void latchInput(){
-                this.outputEnable(false);
-                internalData.setData(getExternalData().getData());
+            public void latchInput() throws Exception {
+                if(outputEnabled){
+                    throw new Exception("OUTPUT MUST BE DISABLED TO LATCH VALUE INTO REGISTER");
+                }
+                else{
+                    this.internalData.clear();
+                    for(Connectable input:inputs) {
+                        this.internalData = (this.internalData.add(input.getOutcomingData()));
+                    }
+                }
+
+
             }
 
         /**
@@ -40,18 +75,16 @@ public class Register extends Connectable implements Notifiable {
          * @param enable
          */
             public void outputEnable(boolean enable){
-                if (!outputEnabled&enable) {
-                    outputEnabled = true;
-                    setExternalData(this.getExternalData().add(this.internalData));
+                this.outputEnabled = enable;
+                if (enable){
+                    setOutDataAndNotify(this.getInternalData());
                 }
-                else if(!enable&outputEnabled){
-                    outputEnabled = false;
-                    setExternalData(this.getExternalData().remove(this.internalData));
+                else{
+                    setOutDataAndNotify(new Data());
                 }
             }
 
-        @Override
-        public void notifyChange() {
+    public void Update() {
 
-        }
+    }
 }
