@@ -1,11 +1,21 @@
 package br.maua.models;
 
-import br.maua.interfaces.Controlled;
+import br.maua.interfaces.Controllable;
 import br.maua.interfaces.Observer;
 
 import java.util.ArrayList;
 
 public abstract class Connectable implements Observer {
+
+    public Connectable(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    private String name;
 
     /**
      * Data being outputted
@@ -67,7 +77,6 @@ public abstract class Connectable implements Observer {
     public boolean isConnectedTo(Connectable connectable){
         return this.outputs.contains(connectable);
     }
-
 
 
 }

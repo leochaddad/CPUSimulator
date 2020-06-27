@@ -1,9 +1,10 @@
 package br.maua.models;
 
+import br.maua.models.connectables.Alu;
+import br.maua.models.connectables.Bus;
+import br.maua.models.connectables.Register;
+import br.maua.uiobjects.RegisterDrawer;
 import javafx.scene.Group;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
 
 public class SequenceComputer {
 
@@ -15,8 +16,11 @@ public class SequenceComputer {
     public Bus bus = new Bus();
     public Alu alu = new Alu(registerA,registerB);
 
+    RegisterDrawer drawer = new RegisterDrawer(registerA,600,400);
+
 
     public void setup(){
+
         registerA.connectToBuffered(bus);
         registerB.connectToBuffered(bus);
         bus.connectTo(registerA);
@@ -24,6 +28,8 @@ public class SequenceComputer {
         bus.connectTo(registerC);
         alu.connectTo(registerC);
         registerC.connectToBuffered(bus);
+
+
     }
 
     public void step(Group root)   {
@@ -31,8 +37,14 @@ public class SequenceComputer {
     }
 
     public Group UIObject() {
-        return new Group(registerA.UIObject(50,150),
-                registerB.UIObject(200, 150), bus.UIObject(250,10), registerC.UIObject(300,300));
+        return new Group(
+                alu.UIObject(500.0,500.0),
+                drawer.draw(),
+                registerB.UIObject(250, 100),
+                bus.UIObject(10,10),
+                drawer.drawConnections(1, 10),
+                registerC.UIObject(145,300)
+        );
     }
 
 }

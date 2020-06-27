@@ -1,5 +1,7 @@
-package br.maua.models;
+package br.maua.models.connectables;
 
+import br.maua.models.Connectable;
+import br.maua.models.Data;
 import javafx.beans.binding.StringExpression;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -8,8 +10,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
-public class Bus extends Connectable  {
+public class Bus extends Connectable {
 
+    public Bus(String name) {
+        super(name);
+    }
 
     public void Update() {
         this.setOutDataAndNotify(new Data().clear());
@@ -23,7 +28,7 @@ public class Bus extends Connectable  {
     StringProperty BusDisplayText = new SimpleStringProperty(this.getOutcomingData().toString());
 
     public Group UIObject(int x, int y) {
-        Rectangle rect = new Rectangle(x,y,500,50);
+        Rectangle rect = new Rectangle(x,y,800,40);
         rect.setFill(Color.rgb(100,200,255));
         Text text = new Text();
         text.textProperty().bind(this.BusDisplayText);
@@ -31,4 +36,5 @@ public class Bus extends Connectable  {
         text.setY(y+25);
         return new Group(rect,text);
     }
+
 }

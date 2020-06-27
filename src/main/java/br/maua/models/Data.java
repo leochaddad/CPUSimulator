@@ -10,8 +10,8 @@ public final class Data {
         this.data = data;
     }
 
-    public Data(){
-        this.data = "0".repeat(dataSize);
+    public Data() {
+
     }
 
     public void setFromDecimal(Integer data) {
@@ -21,7 +21,6 @@ public final class Data {
         }
         this.data = binString;
     }
-
 
     private String data = "000000000000";
 

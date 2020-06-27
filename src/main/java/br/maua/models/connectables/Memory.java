@@ -1,24 +1,29 @@
-package br.maua.models;
+package br.maua.models.connectables;
+
+import br.maua.interfaces.Controllable;
+import br.maua.models.Connectable;
+import br.maua.models.Data;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Memory extends Connectable {
+public class Memory extends Connectable implements Controllable {
 
 
-    private static int memorySize = 16;
-    private Data[] memoryContents = new Data[memorySize];
+    private  int memorySize;
+    private String[] memoryContents = new String[memorySize];
     private Connectable dataPort;
     private Connectable adressPort;
     private boolean readEnable = false;
     private boolean writeEnable = false;
 
-    public Memory(int memorySize, Connectable dataPort, Connectable adressPort) {
+    public Memory(String name, int memorySize, Connectable dataPort, Connectable addressPort) {
+        super(name);
         this.dataPort = dataPort;
-        this.adressPort = adressPort;
+        this.adressPort = addressPort;
         dataPort.connectTo(this);
-        adressPort.connectTo(this);
+        addressPort.connectTo(this);
     }
 
     public void Control(boolean RE, boolean WE) throws Exception {
@@ -34,16 +39,31 @@ public class Memory extends Connectable {
         this.Update();
     }
 
+    public void ControlByString(String controls) throws Exception {
+        Control((Character.getNumericValue(controls.charAt(0)))==1,
+                (Character.getNumericValue(controls.charAt(1)))==1 );
+    }
+    @Override
+    public String getControlls() {
+        return (this.getName()+"_RE "+
+                this.getName()+"_WE " );
+    }
+
+    @Override
+    public int getControlSize() {
+        return 2;
+    }
+
     private void read(){
-        setOutDataAndNotify(memoryContents[adressPort.getOutcomingData().getDecimalData()]);
+        setOutDataAndNotify(new Data(memoryContents[adressPort.getOutcomingData().getDecimalData()]));
     }
     private void write(){
-        memoryContents[adressPort.getOutcomingData().getDecimalData()]=dataPort.getOutcomingData();
+        memoryContents[adressPort.getOutcomingData().getDecimalData()]=dataPort.getOutcomingData().getData();
     }
 
 
     public void Show() {
-        for(Data data:memoryContents){
+        for(String data:memoryContents){
             if(data==null){
                 System.out.println("null");
             }
