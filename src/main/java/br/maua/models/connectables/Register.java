@@ -23,10 +23,8 @@ public class Register extends Connectable implements Controllable {
             this.internalData = new Data(internalData);
         }
 
-        Connectable bufferedConnection;
-        protected boolean bufferEnabled = false;
-        protected boolean outputEnabled = false;
 
+    protected boolean outputEnabled = false;
 
         /**
          * @param BE BufferEnable
@@ -62,29 +60,6 @@ public class Register extends Connectable implements Controllable {
         public int getControlSize() {
             return 3;
         }
-
-        /**
-         * Sets the buffered connection
-         * @param connectable bufferedConnection
-         */
-            public void connectToBuffered(Connectable connectable){
-                bufferedConnection = connectable;
-            }
-
-        /**
-         * Adds or removes bufferedConnection from outputs
-         * @param enabled
-         */
-            public void bufferEnable(boolean enabled) throws Exception {
-                if (enabled & !bufferEnabled){
-                    bufferEnabled = true;
-                    this.connectTo(bufferedConnection);
-                }else if (!enabled & bufferEnabled){
-                    bufferEnabled = false;
-                    this.disconnectFrom(bufferedConnection);
-                    bufferedConnection.Update();
-                }
-            }
 
 
         public void setInternalData(Data internalData) {

@@ -20,7 +20,7 @@ public abstract class Connectable implements Observer {
     /**
      * Data being outputted
      */
-    private Data outcomingData = new Data("000000000000");
+    protected Data outcomingData = new Data("000000000000");
 
 
     /**
@@ -28,7 +28,7 @@ public abstract class Connectable implements Observer {
      */
     protected ArrayList<Connectable> inputs = new ArrayList<>();
     protected ArrayList<Connectable> outputs = new ArrayList<>();
-
+    Connectable bufferedConnection;
 
     /**
      * sets the outcomming data and alerts outputs of change
@@ -76,6 +76,33 @@ public abstract class Connectable implements Observer {
 
     public boolean isConnectedTo(Connectable connectable){
         return this.outputs.contains(connectable);
+    }
+
+
+    protected boolean bufferEnabled = false;
+    /**
+     * Sets the buffered connection
+     * @param connectable bufferedConnection
+     */
+
+    public void connectToBuffered(Connectable connectable){
+        bufferedConnection = connectable;
+    }
+    /**
+     * Adds or removes bufferedConnection from outputs
+     * @param enabled
+     */
+
+
+    public void bufferEnable(boolean enabled) throws Exception {
+        if (enabled & !bufferEnabled){
+            bufferEnabled = true;
+            this.connectTo(bufferedConnection);
+        }else if (!enabled & bufferEnabled){
+            bufferEnabled = false;
+            this.disconnectFrom(bufferedConnection);
+            bufferedConnection.Update();
+        }
     }
 
 
