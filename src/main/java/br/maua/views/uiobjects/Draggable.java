@@ -8,7 +8,7 @@ import javafx.scene.shape.Rectangle;
 public class Draggable extends Group {
 
     public Draggable() {
-        super(new Rectangle(100,100, Color.GREENYELLOW));
+        super(new Rectangle(100,180, Color.DARKORANGE));
     }
 
 
