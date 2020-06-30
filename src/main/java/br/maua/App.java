@@ -1,20 +1,15 @@
 package br.maua;
 
-import br.maua.controllers.CreatorController;
-import br.maua.interfaces.Controllable;
-import br.maua.models.*;
-import br.maua.models.connectables.*;
-import br.maua.views.CreatorView;
-import br.maua.views.uiobjects.Draggable;
+import br.maua.ui.controllers.ConnexionPointController;
+import br.maua.ui.controllers.CreatorController;
+import br.maua.ui.views.CreatorView;
+import br.maua.ui.views.draggables.Draggable;
+import br.maua.ui.views.draggables.simple.AluDraggable;
+import br.maua.ui.views.draggables.simple.BusDraggable;
+import br.maua.ui.views.draggables.simple.RegisterDraggable;
 import javafx.application.Application;
-import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-
-import java.util.ArrayList;
 
 /**
  * JavaFX App
@@ -89,11 +84,12 @@ public class App extends Application {
         CreatorView cv = new CreatorView();
         CreatorController controller = new CreatorController(cv);
         cv.initialize();
-        controller.addElement(new Draggable());
-        controller.addElement(new Draggable());
+        controller.addElement(new RegisterDraggable());
+        controller.addElement(new BusDraggable());
+        controller.addElement(new AluDraggable());
         controller.buildDragHandlers();
         Scene scene = new Scene(cv);
-        stage.setMinWidth(600);
+        stage.setMinWidth(900);
         stage.setMinHeight(600);
         stage.setScene(scene);
         stage.show();
