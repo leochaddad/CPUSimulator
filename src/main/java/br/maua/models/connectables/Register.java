@@ -13,8 +13,6 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
-import java.util.ArrayList;
-
 public class Register extends Connectable implements Controllable {
 
         //Constructor for testing purposes only
@@ -43,7 +41,7 @@ public class Register extends Connectable implements Controllable {
                 }
             }
 
-        public void ControlByString(String controls) throws Exception {
+        public void controlByString(String controls) throws Exception {
             Control((Character.getNumericValue(controls.charAt(0)))==1,
                     (Character.getNumericValue(controls.charAt(1)))==1,
                     (Character.getNumericValue(controls.charAt(2)))==1);
@@ -95,7 +93,7 @@ public class Register extends Connectable implements Controllable {
                             this.internalData = (this.internalData.add(input.getOutcomingData()));
                         }
                         this.setInternalData(internalData);
-                        this.Update();
+                        this.update();
                     }
                 }
 
@@ -113,7 +111,7 @@ public class Register extends Connectable implements Controllable {
                     }
                 }
 
-        public void Update() {
+        public void update() {
                 RegDisplayText.setValue(this.getInternalData().toString());
         }
 
@@ -174,5 +172,8 @@ public class Register extends Connectable implements Controllable {
             return new Group(rect,text, oe,be,in);
         }
 
+    @Override
+    public void setup() {
 
+    }
 }

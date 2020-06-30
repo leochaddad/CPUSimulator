@@ -3,26 +3,18 @@ package br.maua.models.connectables;
 import br.maua.interfaces.Controllable;
 import br.maua.models.Connectable;
 import javafx.scene.Group;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
 
 public class Alu extends Connectable implements Controllable {
 
-    private final Connectable inputConnectionA;
-    private final Connectable inputConnectionB;
+    private  Connectable inputConnectionA;
+    private  Connectable inputConnectionB;
     private boolean flagZero;
     private boolean flagNeg;
     private int operation =0;
 
-    public Alu(String name, Connectable inputConnectionA, Connectable inputConnectionB) {
+    public Alu(String name) {
         super(name);
-        this.inputConnectionA = inputConnectionA;
-        this.inputConnectionB = inputConnectionB;
-        inputConnectionA.connectTo(this);
-        inputConnectionB.connectTo(this);
-
     }
 
     private void Operate(){
@@ -49,7 +41,7 @@ public class Alu extends Connectable implements Controllable {
     }
 
 
-    public void Update() {
+    public void update() {
         Operate();
     }
 
@@ -65,10 +57,10 @@ public class Alu extends Connectable implements Controllable {
         if(!SUB){
             this.operation = 0;
         }
-        this.Update();
+        this.update();
     }
 
-    public void ControlByString(String controls) throws Exception {
+    public void controlByString(String controls) throws Exception {
         Control((Character.getNumericValue(controls.charAt(0)))==1);}
 
     @Override
@@ -96,4 +88,9 @@ public class Alu extends Connectable implements Controllable {
         return new Group(aluShape);
     }
 
+    @Override
+    public void setup() {
+        this.inputConnectionA = inputs.get(0);
+        this.inputConnectionA = inputs.get(1);
+    }
 }

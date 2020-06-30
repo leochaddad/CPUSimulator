@@ -21,7 +21,7 @@ public class Counter extends Register {
         }
     }
 
-    public void ControlByString(String controls) throws Exception {
+    public void controlByString(String controls) throws Exception {
         Control((Character.getNumericValue(controls.charAt(0)))==1,
                 (Character.getNumericValue(controls.charAt(1)))==1,
                 (Character.getNumericValue(controls.charAt(2)))==1,

@@ -22,6 +22,25 @@ public final class Data {
         this.data = binString;
     }
 
+    public void resize() {
+        String dataString = this.getData();
+        while (dataString.length() < dataSize) {
+            dataString = "0" + dataString;
+        }
+        this.setData(dataString);
+    }
+
+    public void cutInHalf(boolean firstHalf){
+        String dataString = this.getData();
+        if (firstHalf){
+            dataString = dataString.substring(0,dataSize/2);
+        }
+        else {
+            dataString = dataString.substring(dataSize/2,dataSize);
+        }
+        this.setData(dataString);
+    }
+
     private String data = "000000000000";
 
     public void setData(String data) {

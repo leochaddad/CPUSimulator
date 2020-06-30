@@ -16,7 +16,7 @@ public class Bus extends Connectable {
         super(name);
     }
 
-    public void Update() {
+    public void update() {
         this.setOutDataAndNotify(new Data().clear());
 
         for(Connectable input:inputs){
@@ -37,4 +37,8 @@ public class Bus extends Connectable {
         return new Group(rect,text);
     }
 
+    @Override
+    public void setup() {
+
+    }
 }

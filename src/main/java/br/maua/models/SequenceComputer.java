@@ -3,18 +3,18 @@ package br.maua.models;
 import br.maua.models.connectables.Alu;
 import br.maua.models.connectables.Bus;
 import br.maua.models.connectables.Register;
-import br.maua.uiobjects.RegisterDrawer;
+import br.maua.views.uiobjects.RegisterDrawer;
 import javafx.scene.Group;
 
 public class SequenceComputer {
 
 
-    public Register registerA = new Register("000000000001");
-    public Register registerB = new Register("000000000011");
-    public Register registerC = new Register("000000000000");
+    public Register registerA = new Register("RegA", "000000000001");
+    public Register registerB = new Register("RegB", "000000000011");
+    public Register registerC = new Register("RegC", "000000000000");
 
-    public Bus bus = new Bus();
-    public Alu alu = new Alu(registerA,registerB);
+    public Bus bus = new Bus("Bus");
+    public Alu alu = new Alu("Alu");
 
     RegisterDrawer drawer = new RegisterDrawer(registerA,600,400);
 

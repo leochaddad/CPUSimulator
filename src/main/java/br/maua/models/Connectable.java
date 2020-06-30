@@ -1,11 +1,11 @@
 package br.maua.models;
 
-import br.maua.interfaces.Controllable;
 import br.maua.interfaces.Observer;
+import br.maua.interfaces.Setup;
 
 import java.util.ArrayList;
 
-public abstract class Connectable implements Observer {
+public abstract class Connectable implements Observer, Setup {
 
     public Connectable(String name) {
         this.name = name;
@@ -49,7 +49,7 @@ public abstract class Connectable implements Observer {
      */
     private void notifyObservers() {
         for(Observer observer:outputs){
-            observer.Update();
+            observer.update();
         }
     }
 
@@ -101,7 +101,7 @@ public abstract class Connectable implements Observer {
         }else if (!enabled & bufferEnabled){
             bufferEnabled = false;
             this.disconnectFrom(bufferedConnection);
-            bufferedConnection.Update();
+            bufferedConnection.update();
         }
     }
 

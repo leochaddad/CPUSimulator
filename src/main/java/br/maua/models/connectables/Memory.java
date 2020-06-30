@@ -5,25 +5,21 @@ import br.maua.models.Connectable;
 import br.maua.models.Data;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Collection;
+import java.util.Collections;
 
 public class Memory extends Connectable implements Controllable {
 
 
-    private  int memorySize;
-    private String[] memoryContents = new String[memorySize];
+    private int memorySize = 16;
+    private ArrayList<String> memoryContents = new ArrayList<>();
     private Connectable dataPort;
     private Connectable adressPort;
     private boolean readEnable = false;
     private boolean writeEnable = false;
 
-    public Memory(String name, int memorySize, Connectable dataPort, Connectable addressPort) {
+    public Memory(String name, int memorySize) {
         super(name);
-        this.dataPort = dataPort;
-        this.adressPort = addressPort;
-        dataPort.connectTo(this);
-        addressPort.connectTo(this);
     }
 
     public void Control(boolean RE, boolean WE) throws Exception {
@@ -36,10 +32,10 @@ public class Memory extends Connectable implements Controllable {
         else if(WE^writeEnable){
             writeEnable = WE;
         }
-        this.Update();
+        this.update();
     }
 
-    public void ControlByString(String controls) throws Exception {
+    public void controlByString(String controls) throws Exception {
         Control((Character.getNumericValue(controls.charAt(0)))==1,
                 (Character.getNumericValue(controls.charAt(1)))==1 );
     }
@@ -55,10 +51,10 @@ public class Memory extends Connectable implements Controllable {
     }
 
     private void read(){
-        setOutDataAndNotify(new Data(memoryContents[adressPort.getOutcomingData().getDecimalData()]));
+        setOutDataAndNotify(new Data(memoryContents.get(adressPort.getOutcomingData().getDecimalData())));
     }
     private void write(){
-        memoryContents[adressPort.getOutcomingData().getDecimalData()]=dataPort.getOutcomingData().getData();
+        memoryContents.set(adressPort.getOutcomingData().getDecimalData(),dataPort.getOutcomingData().getData());
     }
 
 
@@ -76,7 +72,7 @@ public class Memory extends Connectable implements Controllable {
     }
 
     @Override
-    public void Update() {
+    public void update() {
         if(readEnable){
             read();
         }
@@ -86,5 +82,12 @@ public class Memory extends Connectable implements Controllable {
         else {
             setOutDataAndNotify(this.getOutcomingData().clear());
         }
+    }
+
+    @Override
+    public void setup() {
+        this.memoryContents.addAll(Collections.nCopies(memorySize,""));
+        this.adressPort = inputs.get(0);
+        this.dataPort = inputs.get(1);
     }
 }

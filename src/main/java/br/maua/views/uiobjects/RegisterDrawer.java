@@ -1,4 +1,4 @@
-package br.maua.uiobjects;
+package br.maua.views.uiobjects;
 
 import br.maua.interfaces.Drawer;
 import br.maua.models.connectables.Register;

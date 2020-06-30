@@ -1,10 +1,20 @@
 package br.maua;
 
+import br.maua.controllers.CreatorController;
+import br.maua.interfaces.Controllable;
 import br.maua.models.*;
+import br.maua.models.connectables.*;
+import br.maua.views.CreatorView;
+import br.maua.views.uiobjects.Draggable;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
 
 /**
  * JavaFX App
@@ -12,15 +22,25 @@ import javafx.stage.Stage;
 public class App extends Application {
 
     public static void main(String[] args) throws Exception {
-        System.out.println();
-
-//        Register registerA = new Register("000000101111");
-//        Register registerB = new Register("000000000001");
-//        Register registerC = new Register("000000000000");
-//        Counter  programCounter = new Counter("000000000000");
-//        Bus bus = new Bus();
-//        Alu alu = new Alu(registerA,registerB);
+//        System.out.println();
 //
+//        Register registerA = new Register("RegA","000100101111");
+//        Register registerB = new Register("RegB","000000000001");
+//        Register registerC = new Register("RegC","000000000000");
+//        Counter programCounter = new Counter("PC","000000000000");
+//        Bus bus = new Bus("Bus");
+//        Alu alu = new Alu("Alu", registerA,registerB);
+//        Memory memory = new Memory("Mem", 16, registerA,programCounter);
+//        ArrayList<Controllable> controllables = new ArrayList<>();
+//        controllables.add(registerA);
+//        controllables.add(registerB);
+//        controllables.add(registerC);
+//        controllables.add(programCounter);
+//        controllables.add(alu);
+//        controllables.add(memory);
+//
+//        ControlMultiplexer cl = new ControlMultiplexer(controllables);
+
 //        alu.connectTo(registerC);
 //        bus.connectTo(registerA);
 //        bus.connectTo(registerB);
@@ -30,17 +50,25 @@ public class App extends Application {
 //        registerB.connectToBuffered(bus);
 //        registerC.connectToBuffered(bus);
 //        programCounter.connectToBuffered(bus);
-//
-//        Memory memory = new Memory(16, registerA,programCounter);
 //        memory.connectTo(bus);
-//        registerA.Control(false,true,false);
+
+
+//        System.out.println(cl.getControlSequence());
+
+//        cl.Control("0100000000101001");
+
+        //registerA.Control(false,true,false);
+
+        //memory.Control(false,true);
+
+        //programCounter.Control(false,true, false, true);
+
+        //memory.Control(true,false);
+
+//        DataSplitter splitter1 = new DataSplitter("Splitter", bus, true,true);
 //
-//        memory.Control(false,true);
-//
-//        programCounter.Control(false,true, false, true);
-//
-//        memory.Control(true,false);
-//
+//        registerA.connectTo(splitter1);
+//        registerA.outputEnable(true);
 //
 //        memory.Show();
 //        System.out.println("PC " +programCounter.getOutcomingData());
@@ -58,13 +86,17 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-//        //stage.setResizable(false);
-//        SequenceComputer computer = new SequenceComputer();
-//        computer.setup();
-//        Group root = new Group(computer.UIObject());
-//        Scene scene = new Scene(root,900,600);
-//        stage.setScene(scene);
-//        stage.show();
+        CreatorView cv = new CreatorView();
+        CreatorController controller = new CreatorController(cv);
+        cv.initialize();
+        controller.addElement(new Draggable());
+        controller.addElement(new Draggable());
+        controller.buildDragHandlers();
+        Scene scene = new Scene(cv);
+        stage.setMinWidth(600);
+        stage.setMinHeight(600);
+        stage.setScene(scene);
+        stage.show();
 
     }
 }
