@@ -1,9 +1,7 @@
 package br.maua;
 
-import br.maua.ui.controllers.ConnexionPointController;
-import br.maua.ui.controllers.CreatorController;
+import br.maua.ui.controllers.CreatorDragController;
 import br.maua.ui.views.CreatorView;
-import br.maua.ui.views.draggables.Draggable;
 import br.maua.ui.views.draggables.simple.AluDraggable;
 import br.maua.ui.views.draggables.simple.BusDraggable;
 import br.maua.ui.views.draggables.simple.RegisterDraggable;
@@ -82,7 +80,7 @@ public class App extends Application {
     public void start(Stage stage) throws Exception {
 
         CreatorView cv = new CreatorView();
-        CreatorController controller = new CreatorController(cv);
+        CreatorDragController controller = new CreatorDragController(cv);
         cv.initialize();
         controller.addElement(new RegisterDraggable());
         controller.addElement(new BusDraggable());

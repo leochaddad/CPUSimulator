@@ -6,12 +6,11 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.input.*;
-import javafx.scene.transform.Scale;
 
 
-public class CreatorController {
+public class CreatorDragController {
 
-    public CreatorController(CreatorView view) {
+    public CreatorDragController(CreatorView view) {
         this.view = view;
         buildDragHandlers();
         addKeyDetection();
@@ -19,7 +18,6 @@ public class CreatorController {
 
     private CreatorView view;
 
-    private EventHandler elementDragOverElementsArea;
     private EventHandler elementDragDropped;
     private EventHandler elementDragOverCreationArea;
     private Event firstDragEvent;
@@ -38,7 +36,6 @@ public class CreatorController {
                 @Override
                 public void handle(MouseEvent event) {
 
-                    view.getElementsArea().setOnDragOver(elementDragOverElementsArea);
                     view.getCreationArea().setOnDragOver(elementDragOverCreationArea);
                     view.getCreationArea().setOnDragDropped(elementDragDropped);
 
@@ -47,6 +44,7 @@ public class CreatorController {
                     view.setDragOverElement(draggedElement);
 
                     ClipboardContent content = new ClipboardContent();
+
                     content.putString(view.getDragOverElement().getDraggableType().toString());
                     if(!shiftDown) {
                         view.getDragOverElement().startDragAndDrop(TransferMode.ANY).setContent(content);
@@ -59,21 +57,9 @@ public class CreatorController {
 
     public void buildDragHandlers() {
 
-            elementDragOverElementsArea = new EventHandler<DragEvent>() {
-                public void handle(DragEvent event) {
-                    Point2D p = view.getElementsArea().sceneToLocal(event.getSceneX(), event.getSceneY());
-                    if (!view.getElementsArea().boundsInLocalProperty().get().contains(p)) {
-                        view.getDragOverElement().relocateToPoint(new Point2D(event.getSceneX(), event.getSceneY()));
-                        return;
-                    }
-                    event.consume();
-                }
-            };
-
             elementDragOverCreationArea = new EventHandler<DragEvent>() {
                 public void handle(DragEvent event) {
                    event.acceptTransferModes(TransferMode.ANY);
-                   view.getDragOverElement().relocateToPoint(new Point2D(event.getSceneX(), event.getSceneY()));
                    event.consume();
                 }
             };
@@ -81,7 +67,6 @@ public class CreatorController {
             elementDragDropped = new EventHandler<DragEvent>() {
                 public void handle(DragEvent event) {
                     event.setDropCompleted(true);
-                    view.getElementsArea().removeEventHandler(DragEvent.DRAG_OVER, elementDragOverElementsArea);
                     view.getCreationArea().removeEventHandler(DragEvent.DRAG_OVER, elementDragOverCreationArea);
                     view.getCreationArea().removeEventHandler(DragEvent.DRAG_DROPPED, elementDragDropped);
                     view.getDragOverElement().setVisible(true);
@@ -95,7 +80,6 @@ public class CreatorController {
                         elementToAdd.setLayoutX(newPositionX);
                         elementToAdd.setLayoutY(newPositionY);
                         view.getCreationArea().getChildren().add(elementToAdd);
-                        addDragDetection(elementToAdd);
                     }
                 }
             };
@@ -103,13 +87,11 @@ public class CreatorController {
             view.setOnDragDone(new EventHandler<DragEvent>() {
                 @Override
                 public void handle(DragEvent event) {
-                        view.getElementsArea().removeEventHandler(DragEvent.DRAG_OVER, elementDragOverElementsArea);
                         view.getCreationArea().removeEventHandler(DragEvent.DRAG_OVER, elementDragOverCreationArea);
                         view.getCreationArea().removeEventHandler(DragEvent.DRAG_DROPPED, elementDragDropped);
                         view.getDragOverElement().setVisible(true);
                         event.consume();
-                        ConnexionPointController controller1 = new ConnexionPointController();
-                        controller1.initialize(view);
+
                 }});
     }
 
