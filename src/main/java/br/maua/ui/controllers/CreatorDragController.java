@@ -13,25 +13,25 @@ public class CreatorDragController {
     public CreatorDragController(CreatorView view) {
         this.view = view;
         buildDragHandlers();
-        addKeyDetection();
     }
 
     private CreatorView view;
 
-    private EventHandler elementDragDropped;
-    private EventHandler elementDragOverCreationArea;
+    private EventHandler<DragEvent> elementDragDropped;
+    private EventHandler<DragEvent> elementDragOverCreationArea;
+    private EventHandler<DragEvent> elementDragInsideCreationArea;
+    private EventHandler<DragEvent> elementDragInsideCreationAreaDropped;
     private Event firstDragEvent;
     private Draggable draggedElement;
-    private boolean shiftDown = false;
 
-    //Adds drag detection to elements
+    //Adds drag detection to elements in elements pane
     public void addElement(Draggable element){
         view.getElementsArea().getChildren().add(element);
-        addDragDetection(element);
+        addExternalActionHandlers(element);
     }
 
-    //Handles drag detection on draggable elements
-    public void addDragDetection(Draggable element){
+    //Handles drag detection between panes
+    public void addExternalActionHandlers(Draggable element){
             element.setOnDragDetected(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
@@ -43,16 +43,55 @@ public class CreatorDragController {
 
                     view.setDragOverElement(draggedElement);
 
+
                     ClipboardContent content = new ClipboardContent();
 
                     content.putString(view.getDragOverElement().getDraggableType().toString());
-                    if(!shiftDown) {
-                        view.getDragOverElement().startDragAndDrop(TransferMode.ANY).setContent(content);
-                    }
+                    view.getDragOverElement().startDragAndDrop(TransferMode.ANY).setContent(content);
                     firstDragEvent = event;
 
-                }
+               }
             });
+    }
+
+    //Handles drag detection on draggable elements within the creation area pane
+    public void addInternalActionHandlers(Draggable element){
+        element.setOnDragDetected(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                view.getCreationArea().setOnDragOver(elementDragInsideCreationArea);
+                view.getCreationArea().setOnDragDropped(elementDragInsideCreationAreaDropped);
+
+                draggedElement = (Draggable) event.getSource();
+
+                view.setDragOverElement(draggedElement);
+
+                ClipboardContent content = new ClipboardContent();
+
+                content.putString(view.getDragOverElement().getDraggableType().toString());
+                view.getDragOverElement().startDragAndDrop(TransferMode.ANY).setContent(content);
+                firstDragEvent = event;
+
+            }
+        });
+        element.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                //Deselects all elements
+                view.getCreationArea().getChildren().forEach(children -> ((Draggable) children).deselect());
+                //Selects target
+                element.select();
+                event.consume();
+            }
+        });
+        view.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                //Clicked outside, deselects last element selected (only one possible)
+                element.deselect();
+            }
+        });
     }
 
     public void buildDragHandlers() {
@@ -80,9 +119,27 @@ public class CreatorDragController {
                         elementToAdd.setLayoutX(newPositionX);
                         elementToAdd.setLayoutY(newPositionY);
                         view.getCreationArea().getChildren().add(elementToAdd);
+                        addInternalActionHandlers(elementToAdd);
                     }
                 }
             };
+            elementDragInsideCreationArea = new EventHandler<DragEvent>() {
+                public void handle(DragEvent event) {
+                    event.acceptTransferModes(TransferMode.ANY);
+                    view.getDragOverElement().relocateToPoint(new Point2D(event.getSceneX(), event.getSceneY()));
+                    event.consume();
+                }
+            };
+
+            elementDragInsideCreationAreaDropped = new EventHandler<DragEvent>() {
+                public void handle(DragEvent event) {
+                    event.setDropCompleted(true);
+                    view.getCreationArea().removeEventHandler(DragEvent.DRAG_OVER, elementDragOverCreationArea);
+                    view.getCreationArea().removeEventHandler(DragEvent.DRAG_DROPPED, elementDragDropped);
+                    event.consume();
+                }
+            };
+
 
             view.setOnDragDone(new EventHandler<DragEvent>() {
                 @Override
@@ -91,26 +148,12 @@ public class CreatorDragController {
                         view.getCreationArea().removeEventHandler(DragEvent.DRAG_DROPPED, elementDragDropped);
                         view.getDragOverElement().setVisible(true);
                         event.consume();
-
                 }});
     }
 
-    private void addKeyDetection(){
-        view.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent keyEvent) {
-                shiftDown = keyEvent.isShiftDown();
-            }
-        });
-        view.setOnKeyReleased(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent keyEvent) {
-                shiftDown = keyEvent.isShiftDown();
-            }
-        });
-    }
 
-    }
+}
+
 
 
 

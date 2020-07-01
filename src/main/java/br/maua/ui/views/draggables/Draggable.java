@@ -6,6 +6,10 @@ import br.maua.ui.enums.DraggableType;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
+import javafx.scene.effect.Bloom;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.Effect;
+import javafx.scene.effect.Glow;
 
 import java.util.ArrayList;
 
@@ -63,6 +67,14 @@ public class Draggable extends Group {
                 (int) (localCoords.getX() - (getBoundsInLocal().getWidth() / 2)),
                 (int) (localCoords.getY() - (getBoundsInLocal().getHeight() / 2))
         );
+    }
+
+    public void select(){
+
+    }
+
+    public void deselect(){
+
     }
 
     private void addConnexionPoints(){
