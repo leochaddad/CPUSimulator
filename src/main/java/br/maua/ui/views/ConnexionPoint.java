@@ -25,9 +25,20 @@ public class ConnexionPoint extends Group {
     private double positionX;
     private double positionY;
 
-
     public void setOccupied(boolean occupied) {
         this.occupied = occupied;
+    }
+
+    public boolean canBeOutputted(){
+        return (!this.isOccupied()&
+                (this.type.equals(ConnexionPointType.OUTPUT)|
+                        this.type.equals(ConnexionPointType.INPUT_OUTPUT)));
+    }
+
+    public boolean canBeInputted(){
+        return (!this.isOccupied()&
+                (this.type.equals(ConnexionPointType.INPUT)|
+                        this.type.equals(ConnexionPointType.INPUT_OUTPUT)));
     }
 
     public ConnexionPointType getType() {
@@ -46,6 +57,15 @@ public class ConnexionPoint extends Group {
         return positionY;
     }
 
+    public double getCenterInPaneX(){
+        System.out.println(this.getLayoutX()+this.getParent().getLayoutX());
+        return (this.getLayoutX()+this.getParent().getLayoutX());
+    }
+    public double getCenterInPaneY(){
+        System.out.println(this.getLayoutY()+this.getParent().getLayoutY());
+        return (this.getParent().getLayoutY()+this.getLayoutY());
+    }
+
     private void colorCircle(){
        switch (this.type){
 
@@ -60,4 +80,5 @@ public class ConnexionPoint extends Group {
        }
 
     }
+
 }

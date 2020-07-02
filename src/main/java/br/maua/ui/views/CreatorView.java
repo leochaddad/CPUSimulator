@@ -22,15 +22,15 @@ public class CreatorView extends AnchorPane {
         return creationAreaScrollPane;
     }
 
-    public void setDragOverElement(Draggable dragOverElement) {
-        this.dragOverElement = dragOverElement;
+    public void setDraggedElement(Draggable draggedElement) {
+        this.draggedElement = draggedElement;
     }
 
-    public Draggable getDragOverElement() {
-        return dragOverElement;
+    public Draggable getDraggedElement() {
+        return draggedElement;
     }
 
-    private Draggable dragOverElement = new Draggable();
+    private Draggable draggedElement = new Draggable();
 
 
     private ScrollPane creationAreaScrollPane = new ScrollPane();

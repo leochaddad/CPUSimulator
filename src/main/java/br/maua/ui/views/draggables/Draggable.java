@@ -6,10 +6,7 @@ import br.maua.ui.enums.DraggableType;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
-import javafx.scene.effect.Bloom;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.Effect;
-import javafx.scene.effect.Glow;
+
 
 import java.util.ArrayList;
 
@@ -19,6 +16,10 @@ public class Draggable extends Group {
     protected DraggableType draggableType = null;
     protected Group format;
     protected SimpleStringProperty displayText;
+
+    public ArrayList<ConnexionPoint> getConnexionPoints() {
+        return connexionPoints;
+    }
 
     protected ArrayList<ConnexionPoint> connexionPoints = new ArrayList<>();
 
