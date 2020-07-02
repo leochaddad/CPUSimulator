@@ -1,5 +1,6 @@
 package br.maua.ui.views;
 import br.maua.ui.enums.ConnexionPointType;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Group;
 import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.paint.Color;
@@ -24,6 +25,8 @@ public class ConnexionPoint extends Group {
     private Shape shape = new Circle(10);
     private double positionX;
     private double positionY;
+    SimpleDoubleProperty centerInPaneX = new SimpleDoubleProperty();
+    SimpleDoubleProperty centerInPaneY = new SimpleDoubleProperty();
 
     public void setOccupied(boolean occupied) {
         this.occupied = occupied;
@@ -57,14 +60,6 @@ public class ConnexionPoint extends Group {
         return positionY;
     }
 
-    public double getCenterInPaneX(){
-        System.out.println(this.getLayoutX()+this.getParent().getLayoutX());
-        return (this.getLayoutX()+this.getParent().getLayoutX());
-    }
-    public double getCenterInPaneY(){
-        System.out.println(this.getLayoutY()+this.getParent().getLayoutY());
-        return (this.getParent().getLayoutY()+this.getLayoutY());
-    }
 
     private void colorCircle(){
        switch (this.type){
@@ -80,5 +75,15 @@ public class ConnexionPoint extends Group {
        }
 
     }
+
+    public SimpleDoubleProperty centerInPaneXPropriety(){
+        centerInPaneX.bind(this.layoutXProperty().add(this.getParent().layoutXProperty()));
+        return (centerInPaneX);
+    }
+    public SimpleDoubleProperty centerInPaneYPropriety(){
+        centerInPaneY.bind(this.layoutYProperty().add(this.getParent().layoutYProperty()));
+        return (centerInPaneY);
+    }
+
 
 }

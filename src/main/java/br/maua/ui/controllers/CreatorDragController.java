@@ -28,6 +28,7 @@ public class CreatorDragController {
     private EventHandler<DragEvent> elementDragOverCreationArea;
     private EventHandler<DragEvent> elementDragInsideCreationArea;
     private EventHandler<DragEvent> elementDragInsideCreationAreaDropped;
+    private EventHandler<MouseEvent> arrowDragHandler;
 
     private Event firstDragEvent;
     private Draggable draggedElement;
@@ -106,28 +107,47 @@ public class CreatorDragController {
 
     public void addConnexionPointHandlers(ConnexionPoint point){
         //Detects drag to avoid element being dragged by draggable
+
+
         point.setOnDragDetected(new EventHandler<MouseEvent>(){
             public void handle(MouseEvent event){
                 ConnexionPoint sourcePoint = ((ConnexionPoint) event.getSource());
-                arrow = new Arrow(sourcePoint.getCenterInPaneX(),sourcePoint.getCenterInPaneY(),sourcePoint.getCenterInPaneX(),sourcePoint.getCenterInPaneY());
+                if(sourcePoint.canBeOutputted()){
+                    arrow = new Arrow(0,0,0,0);
+                    arrow.setMouseTransparent(true);
+                    arrow.x1Property().bind(sourcePoint.centerInPaneXPropriety());
+                    arrow.y1Property().bind(sourcePoint.centerInPaneYPropriety());
+                    view.getCreationArea().addEventHandler(MouseEvent.MOUSE_DRAGGED,arrowDragHandler);
+                }
+                else {
+                    view.getCreationArea().getChildren().remove(arrow);
+                }
                 view.getCreationArea().getChildren().add(arrow);
                 event.consume();
+
             }
         });
+
         //Gets position of the mouse
         point.setOnMouseReleased(new EventHandler<MouseEvent>(){
             public void handle(MouseEvent event){
+                System.out.println("Release");
+                view.getCreationArea().removeEventHandler(MouseEvent.MOUSE_DRAGGED,arrowDragHandler);
                 Node endTarget = event.getPickResult().getIntersectedNode().getParent();
                 if(endTarget instanceof ConnexionPoint){
                     ConnexionPoint endPoint = (ConnexionPoint) endTarget;
                     if(endPoint.canBeInputted()){
-                        arrow.setX1(endPoint.getCenterInPaneX());
-                        arrow.setY1(endPoint.getCenterInPaneY());
+                        arrow.x2Property().bind(endPoint.centerInPaneXPropriety());
+                        arrow.y2Property().bind(endPoint.centerInPaneYPropriety());
                     }
                     else {
                         view.getCreationArea().getChildren().remove(arrow);
                     }
                 }
+                else {
+                    view.getCreationArea().getChildren().remove(arrow);
+                }
+
                 event.consume();
 
             }
@@ -186,12 +206,21 @@ public class CreatorDragController {
                 }
             };
 
-            view.setOnDragDone(new EventHandler<DragEvent>() {
+            arrowDragHandler = new EventHandler<MouseEvent>() {
+                public void handle(MouseEvent event) {
+                    arrow.setX2(event.getX());
+                    arrow.setY2(event.getY());
+                }
+            };
+
+
+        view.setOnDragDone(new EventHandler<DragEvent>() {
                 @Override
                 public void handle(DragEvent event) {
                         view.getCreationArea().removeEventHandler(DragEvent.DRAG_OVER, elementDragOverCreationArea);
                         view.getCreationArea().removeEventHandler(DragEvent.DRAG_DROPPED, elementDragDropped);
                         view.getDraggedElement().setVisible(true);
+                    System.out.println("done");
                         event.consume();
                 }});
     }

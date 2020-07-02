@@ -13,6 +13,7 @@ public class Arrow extends Group {
     private SimpleDoubleProperty y2 = new SimpleDoubleProperty();
 
     public Arrow(double x1, double y1, double x2, double y2) {
+        mainLine.setStrokeWidth(10);
         this.x1.set(x1);
         this.y1.set(y1);
         this.x2.set(x2);
@@ -20,12 +21,10 @@ public class Arrow extends Group {
 
         getChildren().addAll(mainLine);
 
-
         for(SimpleDoubleProperty s: new SimpleDoubleProperty[]{this.x1,this.y1,this.x2,this.y2}){
             s.addListener((l,o,n) -> update());
         }
         update();
-
     }
 
     private void update() {
@@ -66,5 +65,23 @@ public class Arrow extends Group {
 
     public void setY2(double y2) {
         this.y2.set(y2);
+    }
+
+    public SimpleDoubleProperty x1Property() {
+        return x1;
+    }
+
+    public SimpleDoubleProperty y1Property() {
+        update();
+        return y1;
+    }
+
+    public SimpleDoubleProperty x2Property() {
+        update();
+        return x2;
+    }
+
+    public SimpleDoubleProperty y2Property() {
+        return y2;
     }
 }
