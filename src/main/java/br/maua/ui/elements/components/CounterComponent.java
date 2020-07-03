@@ -1,11 +1,11 @@
 package br.maua.ui.elements.components;
 
-import br.maua.ui.enums.DraggableType;
+import br.maua.ui.enums.ComponentType;
 
 public class CounterComponent extends RegisterComponent {
 
     public CounterComponent() {
-        this.draggableType = DraggableType.COUNTER;
+        this.componentType = ComponentType.COUNTER;
     }
 
 }

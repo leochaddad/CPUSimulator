@@ -3,7 +3,7 @@ package br.maua.ui.elements.components;
 import br.maua.ui.elements.Component;
 import br.maua.ui.enums.ConnexionPointType;
 import br.maua.ui.elements.internalparts.ConnexionPoint;
-import br.maua.ui.enums.DraggableType;
+import br.maua.ui.enums.ComponentType;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -11,7 +11,7 @@ import javafx.scene.shape.Rectangle;
 public class RegisterComponent extends Component {
 
     public RegisterComponent() {
-        super(DraggableType.REGISTER);
+        super(ComponentType.REGISTER);
         this.format = new Group();
         Rectangle shape = new Rectangle(140,80);
         shape.setFill(Color.LIGHTCORAL);
@@ -23,10 +23,20 @@ public class RegisterComponent extends Component {
     }
 
     public void addConnexionPoints(){
-        this.connexionPoints.add(new ConnexionPoint(ConnexionPointType.INPUT_OUTPUT,40,0));
-        this.connexionPoints.add(new ConnexionPoint(ConnexionPointType.INPUT_OUTPUT,100,0));
-        this.connexionPoints.add(new ConnexionPoint(ConnexionPointType.INPUT_OUTPUT,40,80));
-        this.connexionPoints.add(new ConnexionPoint(ConnexionPointType.INPUT_OUTPUT,100,80));
+        //Top
+        this.connexionPoints.add(new ConnexionPoint(ConnexionPointType.INPUT_OUTPUT,30,0));
+        this.connexionPoints.add(new ConnexionPoint(ConnexionPointType.INPUT_OUTPUT,70,0));
+        this.connexionPoints.add(new ConnexionPoint(ConnexionPointType.INPUT_OUTPUT,110,0));
+        //Bottom
+        this.connexionPoints.add(new ConnexionPoint(ConnexionPointType.INPUT_OUTPUT,30,80));
+        this.connexionPoints.add(new ConnexionPoint(ConnexionPointType.INPUT_OUTPUT,70,80));
+        this.connexionPoints.add(new ConnexionPoint(ConnexionPointType.INPUT_OUTPUT,110,80));
+        //Left
+        this.connexionPoints.add(new ConnexionPoint(ConnexionPointType.INPUT_OUTPUT,0,21));
+        this.connexionPoints.add(new ConnexionPoint(ConnexionPointType.INPUT_OUTPUT,0,59));
+        //Right
+        this.connexionPoints.add(new ConnexionPoint(ConnexionPointType.INPUT_OUTPUT,140,21));
+        this.connexionPoints.add(new ConnexionPoint(ConnexionPointType.INPUT_OUTPUT,140,59));
         this.getChildren().addAll(connexionPoints);
     }
 

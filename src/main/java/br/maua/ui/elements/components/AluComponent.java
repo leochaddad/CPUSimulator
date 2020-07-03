@@ -3,16 +3,16 @@ package br.maua.ui.elements.components;
 import br.maua.ui.elements.Component;
 import br.maua.ui.enums.ConnexionPointType;
 import br.maua.ui.elements.internalparts.ConnexionPoint;
-import br.maua.ui.enums.DraggableType;
+import br.maua.ui.enums.ComponentType;
 import br.maua.ui.elements.shapes.Trapezoid;
 
 public class AluComponent extends Component {
 
     public AluComponent() {
-        super(DraggableType.ALU);
+        super(ComponentType.ALU);
         this.format = new Trapezoid();
         this.getChildren().add(format);
-        addConnexionPoints();
+        this.addConnexionPoints();
     }
 
     public void addConnexionPoints(){

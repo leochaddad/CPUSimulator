@@ -1,11 +1,11 @@
 package br.maua.ui.elements;
 
 import br.maua.ui.elements.components.*;
-import br.maua.ui.enums.DraggableType;
+import br.maua.ui.enums.ComponentType;
 
 public class ComponentFactory {
 
-    public Component createNewDraggable(DraggableType draggableType){ //Factory
+    public Component createNewDraggable(ComponentType draggableType){ //Factory
         Component returnType = null;
         switch (draggableType){
             case ALU:returnType = new AluComponent();

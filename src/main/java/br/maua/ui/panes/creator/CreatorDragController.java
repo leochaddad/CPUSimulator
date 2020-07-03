@@ -117,7 +117,7 @@ public class CreatorDragController {
                 if (!((Draggable) firstDragEvent.getSource()).getParent().equals(view.getCreationArea())) {
                     //Creates new element if it comes from the left pane
                     if (draggedElement instanceof Component) {
-                        Component elementToAdd = new ComponentFactory().createNewDraggable(((Component) draggedElement).getDraggableType());
+                        Component elementToAdd = new ComponentFactory().createNewDraggable(((Component) draggedElement).getComponentType());
                         elementToAdd.setLayoutX(newPositionX);
                         elementToAdd.setLayoutY(newPositionY);
                         view.getCreationArea().getChildren().add(elementToAdd);

@@ -1,5 +1,5 @@
 package br.maua.ui.enums;
 
-public enum DraggableType {
+public enum ComponentType {
     ALU, BUS, COUNTER, MEMORY, REGISTER, DATA_SPLITTER, CONTROL_MULTIPLEXER;
 }
