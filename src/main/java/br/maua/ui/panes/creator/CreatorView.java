@@ -1,6 +1,6 @@
 package br.maua.ui.panes.creator;
 
-import br.maua.ui.elements.draggables.Draggable;
+import br.maua.ui.elements.Draggable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ScrollPane;
@@ -30,7 +30,7 @@ public class CreatorView extends AnchorPane {
         return draggedElement;
     }
 
-    private Draggable draggedElement = new Draggable();
+    private Draggable draggedElement;
 
 
     private ScrollPane creationAreaScrollPane = new ScrollPane();

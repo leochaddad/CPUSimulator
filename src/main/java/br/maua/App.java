@@ -1,10 +1,10 @@
 package br.maua;
 
+import br.maua.ui.elements.components.AluComponent;
+import br.maua.ui.elements.components.BusComponent;
+import br.maua.ui.elements.components.RegisterComponent;
 import br.maua.ui.panes.creator.CreatorDragController;
 import br.maua.ui.panes.creator.CreatorView;
-import br.maua.ui.elements.draggables.AluDraggable;
-import br.maua.ui.elements.draggables.BusDraggable;
-import br.maua.ui.elements.draggables.RegisterDraggable;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -82,9 +82,9 @@ public class App extends Application {
         CreatorView cv = new CreatorView();
         CreatorDragController controller = new CreatorDragController(cv);
         cv.initialize();
-        controller.addElement(new RegisterDraggable());
-        controller.addElement(new BusDraggable());
-        controller.addElement(new AluDraggable());
+        controller.addElement(new RegisterComponent());
+        controller.addElement(new BusComponent());
+        controller.addElement(new AluComponent());
         controller.buildDragHandlers();
         Scene scene = new Scene(cv);
         stage.setMinWidth(1000);

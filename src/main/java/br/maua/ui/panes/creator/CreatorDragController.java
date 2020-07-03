@@ -1,7 +1,9 @@
 package br.maua.ui.panes.creator;
 
-import br.maua.ui.elements.small.ConnexionPoint;
-import br.maua.ui.elements.draggables.Draggable;
+import br.maua.ui.elements.Component;
+import br.maua.ui.elements.ComponentFactory;
+import br.maua.ui.elements.internalparts.ConnexionPoint;
+import br.maua.ui.elements.Draggable;
 import br.maua.ui.elements.shapes.Arrow;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -50,7 +52,7 @@ public class CreatorDragController {
 
                     ClipboardContent content = new ClipboardContent();
 
-                    content.putString(view.getDraggedElement().getDraggableType().toString());
+                    content.putString(view.getDraggedElement().toString());
                     view.getDraggedElement().startDragAndDrop(TransferMode.ANY).setContent(content);
                     firstDragEvent = event;
 
@@ -73,10 +75,9 @@ public class CreatorDragController {
 
                 ClipboardContent content = new ClipboardContent();
 
-                content.putString(view.getDraggedElement().getDraggableType().toString());
+                content.putString(view.getDraggedElement().toString());
                 view.getDraggedElement().startDragAndDrop(TransferMode.ANY).setContent(content);
                 firstDragEvent = event;
-
             }
         });
         element.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -152,14 +153,16 @@ public class CreatorDragController {
 
                     if(!((Draggable) firstDragEvent.getSource()).getParent().equals(view.getCreationArea())){
                         //Creates new element if it comes from the left pane
-                        Draggable elementToAdd = draggedElement.createNewDraggable();
-                        elementToAdd.setLayoutX(newPositionX);
-                        elementToAdd.setLayoutY(newPositionY);
-                        view.getCreationArea().getChildren().add(elementToAdd);
-                        //Adds internal handlers
-                        addInternalActionHandlers(elementToAdd);
-                        //Adds connexion point handlers
-                        elementToAdd.getConnexionPoints().forEach(cp -> addConnexionPointHandlers(cp) );
+                        if(draggedElement instanceof Component){
+                            Component elementToAdd = new ComponentFactory().createNewDraggable(((Component) draggedElement).getDraggableType());
+                            elementToAdd.setLayoutX(newPositionX);
+                            elementToAdd.setLayoutY(newPositionY);
+                            view.getCreationArea().getChildren().add(elementToAdd);
+                            //Adds internal handlers
+                            addInternalActionHandlers(elementToAdd);
+                            //Adds connexion point handlers
+                            elementToAdd.getConnexionPoints().forEach(cp -> addConnexionPointHandlers(cp) );
+                        }
                     }
                 }
             };

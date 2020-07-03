@@ -1,15 +1,16 @@
-package br.maua.ui.elements.draggables;
+package br.maua.ui.elements.components;
 
+import br.maua.ui.elements.Component;
 import br.maua.ui.enums.ConnexionPointType;
-import br.maua.ui.elements.small.ConnexionPoint;
+import br.maua.ui.elements.internalparts.ConnexionPoint;
 import br.maua.ui.enums.DraggableType;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class RegisterDraggable extends Draggable {
+public class RegisterComponent extends Component {
 
-    public RegisterDraggable() {
+    public RegisterComponent() {
         super(DraggableType.REGISTER);
         this.format = new Group();
         Rectangle shape = new Rectangle(140,80);
@@ -21,7 +22,7 @@ public class RegisterDraggable extends Draggable {
         addConnexionPoints();
     }
 
-    private void addConnexionPoints(){
+    public void addConnexionPoints(){
         this.connexionPoints.add(new ConnexionPoint(ConnexionPointType.INPUT_OUTPUT,40,0));
         this.connexionPoints.add(new ConnexionPoint(ConnexionPointType.INPUT_OUTPUT,100,0));
         this.connexionPoints.add(new ConnexionPoint(ConnexionPointType.INPUT_OUTPUT,40,80));

@@ -1,12 +1,10 @@
-package br.maua.ui.elements.small;
+package br.maua.ui.elements.internalparts;
 import br.maua.ui.enums.ConnexionPointType;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Group;
-import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
-import javafx.scene.shape.StrokeType;
 
 public class ConnexionPoint extends Group {
 
