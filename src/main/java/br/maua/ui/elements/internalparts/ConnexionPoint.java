@@ -22,7 +22,7 @@ public class ConnexionPoint extends Group {
     private boolean occupied = false;
     private Shape shape = new Circle(7);
     private Shape secondaryShape = new Circle(4);
-    private Shape invisibleShape = new Circle(20, Color.TRANSPARENT);
+    private Shape invisibleShape = new Circle(16, Color.TRANSPARENT);
     private double positionX;
     private double positionY;
     SimpleDoubleProperty centerInPaneX = new SimpleDoubleProperty();

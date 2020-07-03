@@ -3,7 +3,7 @@ package br.maua;
 import br.maua.ui.elements.components.AluComponent;
 import br.maua.ui.elements.components.BusComponent;
 import br.maua.ui.elements.components.RegisterComponent;
-import br.maua.ui.panes.creator.CreatorDragController;
+import br.maua.ui.panes.creator.CreatorController;
 import br.maua.ui.panes.creator.CreatorView;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -80,7 +80,7 @@ public class App extends Application {
     public void start(Stage stage) throws Exception {
 
         CreatorView cv = new CreatorView();
-        CreatorDragController controller = new CreatorDragController(cv);
+        CreatorController controller = new CreatorController(cv);
         cv.initialize();
         controller.addElement(new RegisterComponent());
         controller.addElement(new BusComponent());

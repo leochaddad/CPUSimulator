@@ -8,19 +8,19 @@ import java.util.ArrayList;
 
 public abstract class Component extends Draggable implements Selectable, Connectable {
 
-    protected ComponentType componentType = null; //CP
+    protected ComponentType componentType = null;
 
-    protected SimpleStringProperty displayText; //CP ok
+    protected SimpleStringProperty displayText;
 
-    protected ArrayList<ConnexionPoint> connexionPoints = new ArrayList<>(); //Connectable
+    protected ArrayList<ConnexionPoint> connexionPoints = new ArrayList<>();
 
     public Component(ComponentType type) {
         this.componentType = type;
-    } //CP
+    }
 
     public ComponentType getComponentType() {
         return componentType;
-    } //CP
+    }
 
     public ArrayList<ConnexionPoint> getConnexionPoints() {
         return connexionPoints;

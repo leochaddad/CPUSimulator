@@ -87,7 +87,11 @@ public class ConnexionPointController {
                     pane.getChildren().remove(arrow);
                 }
                 //Removes handler so occupied point can't fall in one of the else conditionals above
+                System.out.println("release");
                 startPoint.removeEventHandler(MouseEvent.MOUSE_RELEASED,arrowReleasedHandler);
+                startPoint.removeEventHandler(MouseEvent.MOUSE_DRAGGED,arrowDragHandler);
+
+
                 event.consume();
             }
         };
