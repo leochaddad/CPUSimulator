@@ -1,7 +1,6 @@
-package br.maua.ui.views.draggables;
+package br.maua.ui.elements.draggables;
 
-import br.maua.ui.views.ConnexionPoint;
-import br.maua.ui.views.draggables.simple.*;
+import br.maua.ui.elements.small.ConnexionPoint;
 import br.maua.ui.enums.DraggableType;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Point2D;

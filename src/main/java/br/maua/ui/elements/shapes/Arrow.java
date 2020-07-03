@@ -1,11 +1,18 @@
-package br.maua.ui.views.draggables.simple.shapes;
+package br.maua.ui.elements.shapes;
 
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Group;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Polyline;
+import javafx.scene.transform.Rotate;
 
 public class Arrow extends Group {
-    private Polyline mainLine = new Polyline();
+
+    private Polyline arrowLine = new Polyline();
+    private Polygon arrowHead = new Polygon();
+    private final double ARROWHEAD_SIZE = 22;
+    Rotate rotate = new Rotate();
 
     private SimpleDoubleProperty x1 = new SimpleDoubleProperty();
     private SimpleDoubleProperty y1 = new SimpleDoubleProperty();
@@ -13,23 +20,40 @@ public class Arrow extends Group {
     private SimpleDoubleProperty y2 = new SimpleDoubleProperty();
 
     public Arrow(double x1, double y1, double x2, double y2) {
-        mainLine.setStrokeWidth(10);
+        arrowLine.setStrokeWidth(14);
+        arrowHead.getPoints().setAll(x2,x2-20,x2,x2+20,x2+20,x2);
         this.x1.set(x1);
         this.y1.set(y1);
         this.x2.set(x2);
         this.y2.set(y2);
 
-        getChildren().addAll(mainLine);
+        arrowHead.getTransforms().addAll(rotate);
+        arrowLine.setStroke(Color.SKYBLUE);
+        arrowHead.setFill(Color.SKYBLUE);
+
+        getChildren().addAll(arrowLine, arrowHead);
 
         for(SimpleDoubleProperty s: new SimpleDoubleProperty[]{this.x1,this.y1,this.x2,this.y2}){
             s.addListener((l,o,n) -> update());
         }
         update();
+
     }
 
     private void update() {
-        mainLine.getPoints().setAll(x1.get(),y1.get(),x2.get(),y2.get());
+        //Updates arrow size
+        arrowLine.getPoints().setAll(x1.get(),y1.get(),x2.get(),y2.get());
 
+        rotate.setPivotX(x2.get()+arrowHead.getLayoutX());
+        rotate.setPivotY(y2.get()+arrowHead.getLayoutY());
+
+
+        //Sets arrowhead position
+        arrowHead.getPoints().setAll(x2.get()-ARROWHEAD_SIZE,y2.get()-ARROWHEAD_SIZE,
+                x2.get()-ARROWHEAD_SIZE,y2.get()+ARROWHEAD_SIZE,x2.get()+ARROWHEAD_SIZE,y2.get());
+
+        //Rotates arrowhead
+        rotate.setAngle(Math.toDegrees(Math.atan2((y2.get()-y1.get()),(x2.get()-x1.get()))));
     }
 
     public double getX1() {

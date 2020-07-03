@@ -1,7 +1,6 @@
-package br.maua.ui.views.draggables.simple;
+package br.maua.ui.elements.draggables;
 
-import br.maua.ui.views.draggables.Draggable;
-import br.maua.ui.views.draggables.simple.shapes.ArrowL;
+import br.maua.ui.elements.shapes.ArrowL;
 import br.maua.ui.enums.DraggableType;
 
 

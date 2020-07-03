@@ -1,8 +1,7 @@
-package br.maua.ui.views.draggables.simple;
+package br.maua.ui.elements.draggables;
 
 import br.maua.ui.enums.ConnexionPointType;
-import br.maua.ui.views.ConnexionPoint;
-import br.maua.ui.views.draggables.Draggable;
+import br.maua.ui.elements.small.ConnexionPoint;
 import br.maua.ui.enums.DraggableType;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;

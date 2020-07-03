@@ -1,11 +1,9 @@
-package br.maua.ui.views.draggables.simple;
+package br.maua.ui.elements.draggables;
 
 import br.maua.ui.enums.ConnexionPointType;
-import br.maua.ui.views.ConnexionPoint;
-import br.maua.ui.views.draggables.Draggable;
+import br.maua.ui.elements.small.ConnexionPoint;
 import br.maua.ui.enums.DraggableType;
-import br.maua.ui.views.draggables.simple.shapes.ArrowL;
-import br.maua.ui.views.draggables.simple.shapes.Trapezoid;
+import br.maua.ui.elements.shapes.Trapezoid;
 
 public class AluDraggable extends Draggable {
 

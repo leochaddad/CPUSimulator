@@ -1,4 +1,4 @@
-package br.maua.ui.views.draggables.simple;
+package br.maua.ui.elements.draggables;
 
 import br.maua.ui.enums.DraggableType;
 

@@ -1,18 +1,13 @@
-package br.maua.ui.controllers;
+package br.maua.ui.panes.creator;
 
-import br.maua.ui.enums.ConnexionPointType;
-import br.maua.ui.views.ConnexionPoint;
-import br.maua.ui.views.CreatorView;
-import br.maua.ui.views.draggables.Draggable;
-import br.maua.ui.views.draggables.simple.shapes.Arrow;
+import br.maua.ui.elements.small.ConnexionPoint;
+import br.maua.ui.elements.draggables.Draggable;
+import br.maua.ui.elements.shapes.Arrow;
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.input.*;
-
-import java.util.ArrayList;
 
 
 public class CreatorDragController {
@@ -29,6 +24,7 @@ public class CreatorDragController {
     private EventHandler<DragEvent> elementDragInsideCreationArea;
     private EventHandler<DragEvent> elementDragInsideCreationAreaDropped;
     private EventHandler<MouseEvent> arrowDragHandler;
+    private EventHandler<MouseEvent> arrowReleasedHandler;
 
     private Event firstDragEvent;
     private Draggable draggedElement;
@@ -51,7 +47,6 @@ public class CreatorDragController {
                     draggedElement = (Draggable) event.getSource();
 
                     view.setDraggedElement(draggedElement);
-
 
                     ClipboardContent content = new ClipboardContent();
 
@@ -103,56 +98,36 @@ public class CreatorDragController {
         });
     }
 
+    //Takes care of creating arrows between connexion points
     Arrow arrow;
+    ConnexionPoint sourcePoint;
+    ConnexionPoint endPoint;
 
     public void addConnexionPointHandlers(ConnexionPoint point){
         //Detects drag to avoid element being dragged by draggable
-
-
         point.setOnDragDetected(new EventHandler<MouseEvent>(){
             public void handle(MouseEvent event){
-                ConnexionPoint sourcePoint = ((ConnexionPoint) event.getSource());
+                sourcePoint = ((ConnexionPoint) event.getSource());
                 if(sourcePoint.canBeOutputted()){
-                    arrow = new Arrow(0,0,0,0);
+                    //Occupies the point
+                    sourcePoint.setOccupied(true);
+                    //Creates new arrow (size configured to not flash)
+                    arrow = new Arrow(sourcePoint.getPositionX(),sourcePoint.getPositionY(),sourcePoint.getPositionX(),sourcePoint.getPositionY());
+                    //Mouse transparency used so the mouse release event don't pick on the arrow
                     arrow.setMouseTransparent(true);
+                    //Binds the start of the arrow with the output node
                     arrow.x1Property().bind(sourcePoint.centerInPaneXPropriety());
                     arrow.y1Property().bind(sourcePoint.centerInPaneYPropriety());
+                    //Handles the drag event
                     view.getCreationArea().addEventHandler(MouseEvent.MOUSE_DRAGGED,arrowDragHandler);
+                    //Adds the arrow to the scene
+                    view.getCreationArea().getChildren().add(arrow);
+                    //Handles release event only if start point can be outputted
+                    point.addEventHandler(MouseEvent.MOUSE_RELEASED,arrowReleasedHandler);
                 }
-                else {
-                    view.getCreationArea().getChildren().remove(arrow);
-                }
-                view.getCreationArea().getChildren().add(arrow);
                 event.consume();
-
             }
         });
-
-        //Gets position of the mouse
-        point.setOnMouseReleased(new EventHandler<MouseEvent>(){
-            public void handle(MouseEvent event){
-                System.out.println("Release");
-                view.getCreationArea().removeEventHandler(MouseEvent.MOUSE_DRAGGED,arrowDragHandler);
-                Node endTarget = event.getPickResult().getIntersectedNode().getParent();
-                if(endTarget instanceof ConnexionPoint){
-                    ConnexionPoint endPoint = (ConnexionPoint) endTarget;
-                    if(endPoint.canBeInputted()){
-                        arrow.x2Property().bind(endPoint.centerInPaneXPropriety());
-                        arrow.y2Property().bind(endPoint.centerInPaneYPropriety());
-                    }
-                    else {
-                        view.getCreationArea().getChildren().remove(arrow);
-                    }
-                }
-                else {
-                    view.getCreationArea().getChildren().remove(arrow);
-                }
-
-                event.consume();
-
-            }
-        });;
-
 
     }
 
@@ -213,6 +188,38 @@ public class CreatorDragController {
                 }
             };
 
+            arrowReleasedHandler = new EventHandler<MouseEvent>(){
+                public void handle(MouseEvent event){
+                    view.getCreationArea().removeEventHandler(MouseEvent.MOUSE_DRAGGED,arrowDragHandler);
+                    //Has to verify if node is a ConnexionPoint before moving forward
+                    Node endTarget = event.getPickResult().getIntersectedNode().getParent();
+                    if(endTarget instanceof ConnexionPoint){
+                        ConnexionPoint endPoint = (ConnexionPoint) endTarget;
+                        //Blocks connecting within same draggable
+                        boolean parentsAreTheSame = endPoint.getParent().equals(sourcePoint.getParent());
+                        if(!parentsAreTheSame & endPoint.canBeInputted()){
+                            //Binds arrow end to input
+                            arrow.x2Property().bind(endPoint.centerInPaneXPropriety());
+                            arrow.y2Property().bind(endPoint.centerInPaneYPropriety());
+                            endPoint.setOccupied(true);
+                        }
+                        //Occupied, same parents or not input type
+                        else {
+                            sourcePoint.setOccupied(false);
+                            view.getCreationArea().getChildren().remove(arrow);
+                        }
+                    }
+                    //Didn't land on a connexion point
+                    else {
+                        sourcePoint.setOccupied(false);
+                        view.getCreationArea().getChildren().remove(arrow);
+                    }
+                    //Removes handler so occupied point can't fall in one of the else conditionals above
+                    sourcePoint.removeEventHandler(MouseEvent.MOUSE_RELEASED,arrowReleasedHandler);
+                    event.consume();
+                }
+            };
+
 
         view.setOnDragDone(new EventHandler<DragEvent>() {
                 @Override
@@ -220,7 +227,6 @@ public class CreatorDragController {
                         view.getCreationArea().removeEventHandler(DragEvent.DRAG_OVER, elementDragOverCreationArea);
                         view.getCreationArea().removeEventHandler(DragEvent.DRAG_DROPPED, elementDragDropped);
                         view.getDraggedElement().setVisible(true);
-                    System.out.println("done");
                         event.consume();
                 }});
     }

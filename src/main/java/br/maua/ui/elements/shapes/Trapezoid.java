@@ -1,4 +1,4 @@
-package br.maua.ui.views.draggables.simple.shapes;
+package br.maua.ui.elements.shapes;
 
 import javafx.scene.Group;
 import javafx.scene.paint.Color;

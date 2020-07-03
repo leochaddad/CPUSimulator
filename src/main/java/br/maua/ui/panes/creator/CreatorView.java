@@ -1,6 +1,6 @@
-package br.maua.ui.views;
+package br.maua.ui.panes.creator;
 
-import br.maua.ui.views.draggables.Draggable;
+import br.maua.ui.elements.draggables.Draggable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ScrollPane;

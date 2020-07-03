@@ -1,4 +1,4 @@
-package br.maua.ui.views;
+package br.maua.ui.elements.small;
 import br.maua.ui.enums.ConnexionPointType;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Group;
@@ -14,15 +14,17 @@ public class ConnexionPoint extends Group {
         this.type = type;
         this.positionX = positionX;
         this.positionY = positionY;
-        this.getChildren().add(shape);
+        this.getChildren().addAll(shape, invisibleShape);
         this.setLayoutX(this.positionX);
         this.setLayoutY(this.positionY);
-        colorCircle();
+        setStyles();
     }
 
     private ConnexionPointType type;
     private boolean occupied = false;
-    private Shape shape = new Circle(10);
+    private Shape shape = new Circle(7);
+    private Shape secondaryShape = new Circle(4);
+    private Shape invisibleShape = new Circle(20, Color.TRANSPARENT);
     private double positionX;
     private double positionY;
     SimpleDoubleProperty centerInPaneX = new SimpleDoubleProperty();
@@ -33,13 +35,13 @@ public class ConnexionPoint extends Group {
     }
 
     public boolean canBeOutputted(){
-        return (!this.isOccupied()&
+        return ((!this.isOccupied())&
                 (this.type.equals(ConnexionPointType.OUTPUT)|
                         this.type.equals(ConnexionPointType.INPUT_OUTPUT)));
     }
 
     public boolean canBeInputted(){
-        return (!this.isOccupied()&
+        return ((!this.isOccupied())&
                 (this.type.equals(ConnexionPointType.INPUT)|
                         this.type.equals(ConnexionPointType.INPUT_OUTPUT)));
     }
@@ -61,17 +63,23 @@ public class ConnexionPoint extends Group {
     }
 
 
-    private void colorCircle(){
+    private void setStyles(){
+        this.shape.setFill(Color.rgb(255,255,255,0.6));
+        this.shape.setStroke(Color.DEEPSKYBLUE);
+        this.secondaryShape.setFill(Color.DEEPSKYBLUE);
+
        switch (this.type){
 
            case INPUT:
-               this.shape.setFill(Color.DARKBLUE);
+               shape.getStrokeDashArray().addAll(3d,3d);
                break;
            case INPUT_OUTPUT:
-               this.shape.setFill(Color.DARKSLATEBLUE);
+               shape.getStrokeDashArray().addAll(3d,3d);
+               this.getChildren().add(secondaryShape);
            break;
            case OUTPUT:
-               this.shape.setFill(Color.DARKMAGENTA);
+
+               this.getChildren().add(secondaryShape);
        }
 
     }
