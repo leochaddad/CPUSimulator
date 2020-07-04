@@ -1,23 +1,21 @@
 package br.maua.ui.panes.creator;
 
-import br.maua.ui.elements.Draggable;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
-import javafx.scene.Node;
-import javafx.scene.input.MouseDragEvent;
+import javafx.scene.Group;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 
 public class DraggableController {
 
-    Draggable draggable;
+    Group draggable;
     AnchorPane pane;
 
     private EventHandler<MouseEvent> elementDragHandler;
     private EventHandler<MouseEvent> elementDroppedHandler;
 
-    public DraggableController(Draggable draggable) {
+    public DraggableController(Group draggable) {
         this.draggable = draggable;
         this.pane = (AnchorPane) draggable.getParent();
         buildEventHandlers();
@@ -37,7 +35,9 @@ public class DraggableController {
     private void buildEventHandlers(){
         elementDragHandler = new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
-                draggable.relocateToPoint(new Point2D(event.getSceneX(), event.getSceneY()));
+                Point2D localCoords = pane.sceneToLocal(new Point2D(event.getSceneX(), event.getSceneY()));
+                draggable.relocate((localCoords.getX()-draggable.getBoundsInLocal().getWidth()/2),
+                        (localCoords.getY()-draggable.getBoundsInLocal().getHeight()/2));
             }
         };
 

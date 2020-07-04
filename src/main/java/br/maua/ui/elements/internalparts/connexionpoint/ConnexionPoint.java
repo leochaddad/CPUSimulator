@@ -1,4 +1,4 @@
-package br.maua.ui.elements.internalparts;
+package br.maua.ui.elements.internalparts.connexionpoint;
 import br.maua.ui.enums.ConnexionPointType;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Group;

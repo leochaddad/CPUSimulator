@@ -2,7 +2,7 @@ package br.maua.ui.elements.components;
 
 import br.maua.ui.elements.Component;
 import br.maua.ui.enums.ConnexionPointType;
-import br.maua.ui.elements.internalparts.ConnexionPoint;
+import br.maua.ui.elements.internalparts.connexionpoint.ConnexionPoint;
 import br.maua.ui.enums.ComponentType;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;

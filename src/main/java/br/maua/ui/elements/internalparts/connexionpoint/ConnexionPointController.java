@@ -1,6 +1,6 @@
-package br.maua.ui.panes.creator;
+package br.maua.ui.elements.internalparts.connexionpoint;
 
-import br.maua.ui.elements.internalparts.ConnexionPoint;
+import br.maua.ui.elements.internalparts.connexionpoint.ConnexionPoint;
 import br.maua.ui.elements.shapes.Arrow;
 import javafx.event.EventHandler;
 import javafx.scene.Node;

@@ -1,12 +1,22 @@
 package br.maua.ui.elements;
 
-import br.maua.ui.elements.internalparts.ConnexionPoint;
+import br.maua.ui.elements.internalparts.connexionpoint.ConnexionPoint;
+import br.maua.ui.elements.mouselogic.interfaces.Connectable;
+import br.maua.ui.elements.mouselogic.interfaces.Selectable;
 import br.maua.ui.enums.ComponentType;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.scene.Group;
 
 import java.util.ArrayList;
 
-public abstract class Component extends Draggable implements Selectable, Connectable {
+public abstract class Component extends Group implements Selectable, Connectable {
+
+    @Override
+    public Group selectableWho() {
+        return this;
+    }
+
+    protected Group format;
 
     protected ComponentType componentType = null;
 
@@ -28,16 +38,5 @@ public abstract class Component extends Draggable implements Selectable, Connect
     public void addConnexionPoints(){
 
     }
-
-    @Override
-    public void select() {
-
-    }
-
-    @Override
-    public void deselect() {
-
-    }
-
 
 }

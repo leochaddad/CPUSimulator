@@ -2,10 +2,11 @@ package br.maua.ui.panes.creator;
 
 import br.maua.ui.elements.Component;
 import br.maua.ui.elements.ComponentFactory;
-import br.maua.ui.elements.Draggable;
+
+import br.maua.ui.elements.internalparts.connexionpoint.ConnexionPointController;
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.geometry.Point2D;
+import javafx.scene.Group;
 import javafx.scene.input.*;
 
 
@@ -23,16 +24,16 @@ public class CreatorController {
 
 
     private Event firstDragEvent;
-    private Draggable draggedElement;
+    private Group draggedElement;
 
     //Adds drag detection to elements in elements pane
-    public void addElement(Draggable element) {
+    public void addElement(Group element) {
         view.getElementsArea().getChildren().add(element);
         addExternalActionHandlers(element);
     }
 
     //Handles drag detection between panes
-    public void addExternalActionHandlers(Draggable element) {
+    public void addExternalActionHandlers(Group element) {
         element.setOnDragDetected(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -40,7 +41,7 @@ public class CreatorController {
                 view.getCreationArea().setOnDragOver(elementDragOverCreationArea);
                 view.getCreationArea().setOnDragDropped(elementDragDropped);
 
-                draggedElement = (Draggable) event.getSource();
+                draggedElement = (Group) event.getSource();
 
                 view.setDraggedElement(draggedElement);
 
@@ -71,10 +72,10 @@ public class CreatorController {
                 view.getCreationArea().removeEventHandler(DragEvent.DRAG_DROPPED, elementDragDropped);
                 view.getDraggedElement().setVisible(true);
                 event.consume();
-                int newPositionX = (int) Math.ceil((event.getX() / 1) - draggedElement.getCenterX());
-                int newPositionY = (int) Math.ceil((event.getY() / 1) - draggedElement.getCenterY());
+                int newPositionX = (int) Math.ceil((event.getX() / 1) - draggedElement.getBoundsInLocal().getCenterX());
+                int newPositionY = (int) Math.ceil((event.getY() / 1) - draggedElement.getBoundsInLocal().getCenterY());
 
-                if (!((Draggable) firstDragEvent.getSource()).getParent().equals(view.getCreationArea())) {
+                if (!((Group) firstDragEvent.getSource()).getParent().equals(view.getCreationArea())) {
                     //Creates new element if it comes from the left pane
                     if (draggedElement instanceof Component) {
                         Component elementToAdd = new ComponentFactory().createNewDraggable(((Component) draggedElement).getComponentType());
