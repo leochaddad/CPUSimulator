@@ -20,26 +20,56 @@ public class BusComponent extends Component  {
         this.getChildren().add(format);
         ((Resizable)format).setResizeEnabled(false); //Disabled by default
         ((ArrowL)format).hProperty().addListener(observable -> addConnexionPoints());
-        format.layoutYProperty().addListener(observable -> addConnexionPoints());
+        ((ArrowL)format).vProperty().addListener(observable -> addConnexionPoints());
+        setupConnexionPoints();
     }
 
     ArrayList<ConnexionPoint> horizontalPoints = new ArrayList<>();
     ArrayList<ConnexionPoint> verticalPoints = new ArrayList<>();
 
+
+    private void setupConnexionPoints(){
+        for (int i = 1; i < 100 ; i++) {
+            ConnexionPoint newHPoint = new ConnexionPoint(ConnexionPointType.INPUT_OUTPUT,42*i,((ArrowL) format).HORIZONTAL_CENTER);
+            ConnexionPoint newVPoint = new ConnexionPoint(ConnexionPointType.INPUT_OUTPUT,((ArrowL) format).VERTICAL_CENTER,42*i);
+            horizontalPoints.add(newHPoint);
+            verticalPoints.add(newVPoint);
+            newHPoint.setVisible(false);
+            newVPoint.setVisible(false);
+        }
+        connexionPoints.addAll(horizontalPoints);
+        connexionPoints.addAll(verticalPoints);
+        getChildren().addAll(horizontalPoints);
+        getChildren().addAll(verticalPoints);
+    }
+
     @Override
     public void addConnexionPoints() {
-        int expectedNumberOfHPoints =((ArrowL)format).hProperty().intValue()/42;
 
-        for(int i = horizontalPoints.size() +1; i<expectedNumberOfHPoints; i++){
-            expectedNumberOfHPoints =((ArrowL)format).hProperty().intValue()/42;
-            ConnexionPoint cp = new ConnexionPoint(ConnexionPointType.INPUT_OUTPUT,expectedNumberOfHPoints*40, ((ArrowL) format).HORIZONTAL_CENTER );
-            System.out.println("point @ "+ expectedNumberOfHPoints*40);
-            new ConnexionPointController(cp,(AnchorPane)this.getParent());
-            connexionPoints.add(cp);
-            horizontalPoints.add(cp);
-            getChildren().add(cp);
+        int expectedNumberOfHPoints =((ArrowL)format).hProperty().intValue()/42;
+        int expectedNumberOfVPoints =((ArrowL)format).vProperty().intValue()/42;
+
+
+        horizontalPoints.subList(0, expectedNumberOfHPoints).forEach(connexionPoint -> connexionPoint.setVisible(true));
+        horizontalPoints.subList(expectedNumberOfHPoints,horizontalPoints.size()).forEach(connexionPoint -> {
+            connexionPoint.setVisible(false);
+             if(connexionPoint.isOccupied()){
+                    ((ArrowL) format).setMINWIDTH(connexionPoint.getPositionX());
+                }
         }
+        );
+
+        verticalPoints.subList(0, expectedNumberOfVPoints).forEach(connexionPoint -> connexionPoint.setVisible(true));
+        verticalPoints.subList(expectedNumberOfVPoints,verticalPoints.size()).forEach(connexionPoint -> {
+                    connexionPoint.setVisible(false);
+                    if(connexionPoint.isOccupied()){
+                        ((ArrowL) format).setMINHEIGHT(connexionPoint.getPositionY());
+                    }
+                }
+        );
+
     }
+
 
     @Override
     public void select(){

@@ -17,7 +17,6 @@ public interface Selectable {
         shadow.setColor(Color.SKYBLUE);
         shadow.setSpread(0.5);
         shadow.setRadius(5);
-        ((Connectable)selectableWho()).setConnectEnabled(true);
         selectableWho().setEffect(shadow);
     }
 

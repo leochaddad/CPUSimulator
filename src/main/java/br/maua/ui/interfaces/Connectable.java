@@ -12,11 +12,6 @@ public interface Connectable {
 
     ArrayList<ConnexionPoint> getConnexionPoints();
 
-    default void setConnectEnabled(boolean connectEnabled){
-        getConnexionPoints().forEach(dh->{
-            dh.setVisible(connectEnabled);
-        }
-        );
-    }
+
 
 }

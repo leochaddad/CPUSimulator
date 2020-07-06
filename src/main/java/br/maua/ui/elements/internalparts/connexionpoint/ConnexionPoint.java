@@ -66,8 +66,10 @@ public class ConnexionPoint extends Group {
 
 
     private void setStyles(){
-        this.shape.setFill(Color.rgb(255,255,255,0.6));
+        this.shape.setFill(Color.rgb(255,255,255,0.3));
         this.shape.setStroke(Color.DEEPSKYBLUE);
+        this.shape.setOpacity(0.6);
+        this.secondaryShape.setOpacity(0.6);
         this.secondaryShape.setFill(Color.DEEPSKYBLUE);
 
        switch (this.type){

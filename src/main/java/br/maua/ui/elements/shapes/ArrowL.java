@@ -18,10 +18,13 @@ public class ArrowL extends Group implements Resizable {
 
     public final double BASEHEIGHT = 130;
     public final double BASEWIDTH = 90;
+    private double MINHEIGHT = BASEWIDTH;
+    private double MINWIDTH = BASEHEIGHT;
     public final double ARROWHEADWIDTH = 30;
     public final double HORIZONTAL_CENTER = 27.5;
     public final double VERTICAL_CENTER = 15;
     public final double MARGIN = 10;
+
 
     private final SimpleDoubleProperty h = new SimpleDoubleProperty();
 
@@ -90,16 +93,24 @@ public class ArrowL extends Group implements Resizable {
 
     }
 
+    public void setMINHEIGHT(double MINHEIGHT) {
+        this.MINHEIGHT = MINHEIGHT;
+    }
+
+    public void setMINWIDTH(double MINWIDTH) {
+        this.MINWIDTH = MINWIDTH;
+    }
+
     @Override
     public void extendX(double x) {
-        if ((x+h.get())>BASEWIDTH){
+        if ((x+h.get())>MINWIDTH){
             setWidth(x+h.get());
         }
     }
 
     @Override
     public void extendY(double y) {
-        if ((y+v.get())>BASEHEIGHT){
+        if ((y+v.get())>MINHEIGHT){
             setHeight(y+v.get());
         }
     }
