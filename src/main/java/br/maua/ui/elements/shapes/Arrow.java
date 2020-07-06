@@ -1,6 +1,6 @@
 package br.maua.ui.elements.shapes;
 
-import br.maua.ui.elements.mouselogic.interfaces.Selectable;
+import br.maua.ui.interfaces.Selectable;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;

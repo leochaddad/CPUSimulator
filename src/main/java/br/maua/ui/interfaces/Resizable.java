@@ -1,6 +1,5 @@
-package br.maua.ui.elements.mouselogic.interfaces;
+package br.maua.ui.interfaces;
 
-import br.maua.ui.elements.internalparts.connexionpoint.ConnexionPoint;
 import br.maua.ui.elements.internalparts.draghandle.DragHandle;
 
 import java.util.ArrayList;

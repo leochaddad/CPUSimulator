@@ -1,4 +1,4 @@
-package br.maua.ui.elements.components;
+package br.maua.ui.elements.components.simple;
 
 import br.maua.ui.enums.ComponentType;
 

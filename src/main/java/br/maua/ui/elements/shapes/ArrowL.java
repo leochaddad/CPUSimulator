@@ -1,16 +1,13 @@
 package br.maua.ui.elements.shapes;
 
-import br.maua.ui.elements.components.BusComponent;
 import br.maua.ui.elements.internalparts.draghandle.DragHandle;
 import br.maua.ui.elements.internalparts.draghandle.DragHandleController;
-import br.maua.ui.elements.mouselogic.interfaces.Resizable;
+import br.maua.ui.interfaces.Resizable;
 import br.maua.ui.enums.DragHandleType;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.value.ChangeListener;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
-import javafx.scene.shape.Shape;
 
 import java.util.ArrayList;
 
@@ -27,7 +24,6 @@ public class ArrowL extends Group implements Resizable {
     public final double MARGIN = 10;
 
     private final SimpleDoubleProperty h = new SimpleDoubleProperty();
-
 
     public SimpleDoubleProperty hProperty() {
         return h;
@@ -50,8 +46,7 @@ public class ArrowL extends Group implements Resizable {
     }
 
     private void setShape(){
-        //String path = "M " + h.get() + " 0 L "+ (30.0+h.get()) + " 27.5 L "+h.get()+" 55 L "+h.get()+" 42.5 L 30 42.5 L 30 " +v.get()+ " L 15 " + v.get() + " L 0 " + v.get() + " L 0 12.5 L "+h.get()+" 12.5 Z";
-        String path = "m 0 10 h 50 v -5 l 10 10 l -10 7.5 v -5 h -50 v -7.5 z ";
+        String path = "M " + h.get() + " 0 L "+ (30.0+h.get()) + " 27.5 L "+h.get()+" 55 L "+h.get()+" 42.5 L 30 42.5 L 30 " +v.get()+ " L 15 " + v.get() + " L 0 " + v.get() + " L 0 12.5 L "+h.get()+" 12.5 Z";
         shape.setContent(path);
         shape.setFill(Color.LIGHTSKYBLUE);
         shape.setStrokeWidth(1);

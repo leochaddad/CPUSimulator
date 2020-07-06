@@ -1,6 +1,6 @@
-package br.maua.ui.elements.mouselogic.controllers;
+package br.maua.ui.elements.components.controllers;
 
-import br.maua.ui.elements.mouselogic.interfaces.DropAction;
+import br.maua.ui.interfaces.DropAction;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Group;

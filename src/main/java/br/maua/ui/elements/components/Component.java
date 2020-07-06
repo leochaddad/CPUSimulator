@@ -1,8 +1,8 @@
-package br.maua.ui.elements;
+package br.maua.ui.elements.components;
 
 import br.maua.ui.elements.internalparts.connexionpoint.ConnexionPoint;
-import br.maua.ui.elements.mouselogic.interfaces.Connectable;
-import br.maua.ui.elements.mouselogic.interfaces.Selectable;
+import br.maua.ui.interfaces.Connectable;
+import br.maua.ui.interfaces.Selectable;
 import br.maua.ui.enums.ComponentType;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.Group;

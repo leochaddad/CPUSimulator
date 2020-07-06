@@ -1,4 +1,4 @@
-package br.maua.ui.elements.mouselogic.interfaces;
+package br.maua.ui.interfaces;
 
 
 import javafx.scene.Group;

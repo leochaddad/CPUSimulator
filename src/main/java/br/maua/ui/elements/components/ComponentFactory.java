@@ -1,6 +1,6 @@
-package br.maua.ui.elements;
+package br.maua.ui.elements.components;
 
-import br.maua.ui.elements.components.*;
+import br.maua.ui.elements.components.simple.*;
 import br.maua.ui.enums.ComponentType;
 
 public class ComponentFactory {

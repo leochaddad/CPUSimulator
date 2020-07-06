@@ -1,7 +1,5 @@
 package br.maua;
 
-import br.maua.ui.elements.components.RegisterComponent;
-import br.maua.ui.elements.mouselogic.controllers.MultiplePaneDragController;
 import br.maua.ui.panes.creator.CreatorController;
 import br.maua.ui.panes.creator.CreatorView;
 import javafx.application.Application;

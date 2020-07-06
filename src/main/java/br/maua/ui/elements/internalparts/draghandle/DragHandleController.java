@@ -1,12 +1,11 @@
 package br.maua.ui.elements.internalparts.draghandle;
 
 
-import br.maua.ui.elements.mouselogic.interfaces.Resizable;
+import br.maua.ui.interfaces.Resizable;
 
 import br.maua.ui.enums.DragHandleType;
 import javafx.event.EventHandler;
 
-import javafx.geometry.Bounds;
 import javafx.scene.Cursor;
 import javafx.scene.input.MouseEvent;
 

@@ -1,9 +1,9 @@
-package br.maua.ui.elements.components;
+package br.maua.ui.elements.components.simple;
 
-import br.maua.ui.elements.Component;
+import br.maua.ui.elements.components.Component;
 import br.maua.ui.elements.internalparts.connexionpoint.ConnexionPoint;
 import br.maua.ui.elements.internalparts.connexionpoint.ConnexionPointController;
-import br.maua.ui.elements.mouselogic.interfaces.Resizable;
+import br.maua.ui.interfaces.Resizable;
 import br.maua.ui.elements.shapes.ArrowL;
 import br.maua.ui.enums.ComponentType;
 import br.maua.ui.enums.ConnexionPointType;

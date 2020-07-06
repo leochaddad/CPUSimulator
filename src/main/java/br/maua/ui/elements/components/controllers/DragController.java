@@ -1,4 +1,4 @@
-package br.maua.ui.elements.mouselogic.controllers;
+package br.maua.ui.elements.components.controllers;
 
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
