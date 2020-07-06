@@ -6,8 +6,17 @@ import java.util.ArrayList;
 
 public interface Connectable {
 
+
     ArrayList<ConnexionPoint> connexionPoints = new ArrayList<>();
     void addConnexionPoints();
-    public ArrayList<ConnexionPoint> getConnexionPoints();
+
+    ArrayList<ConnexionPoint> getConnexionPoints();
+
+    default void setConnectEnabled(boolean connectEnabled){
+        getConnexionPoints().forEach(dh->{
+            dh.setVisible(connectEnabled);
+        }
+        );
+    }
 
 }

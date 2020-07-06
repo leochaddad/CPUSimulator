@@ -16,8 +16,8 @@ public class ConnexionPointController {
         addConnexionPointHandlers();
     }
 
-    private AnchorPane pane;
-    private ConnexionPoint startPoint;
+    private final AnchorPane pane;
+    private final ConnexionPoint startPoint;
     private Arrow arrow;
 
     private EventHandler<MouseEvent> arrowDragHandler;

@@ -8,11 +8,12 @@ import br.maua.ui.elements.shapes.Trapezoid;
 
 public class AluComponent extends Component {
 
+
+
     public AluComponent() {
         super(ComponentType.ALU);
         this.format = new Trapezoid();
         this.getChildren().add(format);
-        this.addConnexionPoints();
     }
 
     public void addConnexionPoints(){

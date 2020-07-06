@@ -1,4 +1,4 @@
-package br.maua.ui.panes.creator;
+package br.maua.ui.elements.mouselogic.controllers;
 
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
@@ -7,7 +7,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 
-public class DraggableController {
+public class DragController {
 
     Group draggable;
     AnchorPane pane;
@@ -15,7 +15,7 @@ public class DraggableController {
     private EventHandler<MouseEvent> elementDragHandler;
     private EventHandler<MouseEvent> elementDroppedHandler;
 
-    public DraggableController(Group draggable) {
+    public DragController(Group draggable) {
         this.draggable = draggable;
         this.pane = (AnchorPane) draggable.getParent();
         buildEventHandlers();

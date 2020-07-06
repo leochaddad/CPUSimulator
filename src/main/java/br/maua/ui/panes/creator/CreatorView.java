@@ -2,7 +2,6 @@ package br.maua.ui.panes.creator;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
 import javafx.scene.transform.Scale;
@@ -10,60 +9,48 @@ import javafx.scene.transform.Scale;
 public class CreatorView extends AnchorPane {
 
 
-    public VBox getElementsArea() {
-        return elementsArea;
+    public VBox getAvailableComponentsBox() {
+        return availableComponentsBox;
     }
 
-    public AnchorPane getCreationArea() {
-        return creationArea;
+    public AnchorPane getCreationAreaAnchorPane() {
+        return creationAreaAnchorPane;
     }
 
     public ScrollPane getCreationAreaScrollPane() {
         return creationAreaScrollPane;
     }
 
-    public void setDraggedElement(Group draggedElement) {
-        this.draggedElement = draggedElement;
-    }
 
-    public Group getDraggedElement() {
-        return draggedElement;
-    }
-
-    private Group draggedElement;
-
-
-    private ScrollPane creationAreaScrollPane = new ScrollPane();
-    private AnchorPane creationArea = new AnchorPane();
-    private VBox elementsArea = new VBox();
-    private ScrollPane elementsScrollPane = new ScrollPane();
-    private HBox hBox = new HBox();
+    private final ScrollPane creationAreaScrollPane = new ScrollPane();
+    private final AnchorPane creationAreaAnchorPane = new AnchorPane();
+    private final VBox availableComponentsBox = new VBox();
+    private final ScrollPane availableComponentsScrollPane = new ScrollPane();
+    private final HBox hBox = new HBox();
 
 
     public void initialize() {
-        creationAreaScrollPane.setContent(creationArea);
+        creationAreaScrollPane.setContent(creationAreaAnchorPane);
 
-        elementsScrollPane.setContent(elementsArea);
-        hBox.getChildren().addAll(elementsScrollPane,creationAreaScrollPane);
+        availableComponentsScrollPane.setContent(availableComponentsBox);
+        hBox.getChildren().addAll(availableComponentsScrollPane,creationAreaScrollPane);
         this.getChildren().add(hBox);
-        elementsArea.setSpacing(10);
-        elementsArea.setAlignment(Pos.TOP_CENTER);
-        elementsArea.setPadding(Insets.EMPTY);
-        elementsArea.paddingProperty().setValue(new Insets(10));
+        availableComponentsBox.setSpacing(10);
+        availableComponentsBox.setAlignment(Pos.TOP_CENTER);
+        availableComponentsBox.setPadding(Insets.EMPTY);
+        availableComponentsBox.paddingProperty().setValue(new Insets(10));
 
-        elementsScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        elementsArea.getTransforms().add(new Scale(0.6,0.6));
+        availableComponentsScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        availableComponentsBox.getTransforms().add(new Scale(0.6,0.6));
 
         hBox.prefWidthProperty().bind(this.widthProperty());
         hBox.prefHeightProperty().bind(this.heightProperty());
 
-        creationArea.prefHeightProperty().bind(creationAreaScrollPane.heightProperty());
-        creationArea.prefWidthProperty().bind(creationAreaScrollPane.widthProperty());
+        creationAreaAnchorPane.prefHeightProperty().bind(creationAreaScrollPane.heightProperty());
+        creationAreaAnchorPane.prefWidthProperty().bind(creationAreaScrollPane.widthProperty());
         creationAreaScrollPane.prefWidthProperty().bind(hBox.widthProperty().multiply(0.9));
         creationAreaScrollPane.prefHeightProperty().bind(hBox.heightProperty());
         this.setPrefSize(USE_COMPUTED_SIZE,USE_COMPUTED_SIZE);
-
-
     }
 
 

@@ -11,7 +11,7 @@ public class SelectableController {
         addEventHandlers();
     }
 
-    private Selectable selectable;
+    private final Selectable selectable;
 
     private void addEventHandlers(){
         selectable.selectableWho().setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -20,10 +20,11 @@ public class SelectableController {
                 //Deselects everyone
                 selectable.selectableWho().getParent().getChildrenUnmodifiable().forEach(children->
                         {if(children instanceof Selectable ){
-                            ((Selectable) children).deselect();
+                            ((Selectable) children).styleAsDeselected();
                         } }
                 );
                 //Selects target
+                selectable.styleAsSelected();
                 selectable.select();
                 event.consume();
             }
@@ -35,6 +36,7 @@ public class SelectableController {
                 //Deselects everyone
                 selectable.selectableWho().getParent().getChildrenUnmodifiable().forEach(children->
                         {if(children instanceof Selectable ){
+                            ((Selectable) children).styleAsDeselected();
                             ((Selectable) children).deselect();
                         } }
                 );

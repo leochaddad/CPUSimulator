@@ -2,11 +2,14 @@ package br.maua.ui.elements.internalparts.connexionpoint;
 import br.maua.ui.enums.ConnexionPointType;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Group;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 
 public class ConnexionPoint extends Group {
+
+    ConnexionPointController controller;
 
     public ConnexionPoint(ConnexionPointType type, double positionX, double positionY) {
         this.type = type;
@@ -18,13 +21,14 @@ public class ConnexionPoint extends Group {
         setStyles();
     }
 
-    private ConnexionPointType type;
+
+    private final ConnexionPointType type;
     private boolean occupied = false;
-    private Shape shape = new Circle(7);
-    private Shape secondaryShape = new Circle(4);
-    private Shape invisibleShape = new Circle(16, Color.TRANSPARENT);
-    private double positionX;
-    private double positionY;
+    private final Shape shape = new Circle(7);
+    private final Shape secondaryShape = new Circle(3);
+    private final Shape invisibleShape = new Circle(16, Color.TRANSPARENT);
+    private final double positionX;
+    private final double positionY;
     SimpleDoubleProperty centerInPaneX = new SimpleDoubleProperty();
     SimpleDoubleProperty centerInPaneY = new SimpleDoubleProperty();
 
@@ -76,7 +80,6 @@ public class ConnexionPoint extends Group {
                this.getChildren().add(secondaryShape);
            break;
            case OUTPUT:
-
                this.getChildren().add(secondaryShape);
        }
 

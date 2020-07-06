@@ -5,9 +5,9 @@ import br.maua.ui.enums.ComponentType;
 
 public class ComponentFactory {
 
-    public Component createNewDraggable(ComponentType draggableType){ //Factory
+    public Component newComponent(ComponentType type){ //Factory
         Component returnType = null;
-        switch (draggableType){
+        switch (type){
             case ALU:returnType = new AluComponent();
                 break;
             case BUS:returnType = new BusComponent();
@@ -26,4 +26,10 @@ public class ComponentFactory {
         return returnType;
     }
 
+    public Component newComponentAt(ComponentType type, Double x, Double y){
+        Component component = newComponent(type);
+        component.setLayoutX(x);
+        component.setLayoutY(y);
+        return component;
+    }
 }

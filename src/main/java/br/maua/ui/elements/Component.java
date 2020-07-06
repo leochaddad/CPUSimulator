@@ -35,8 +35,15 @@ public abstract class Component extends Group implements Selectable, Connectable
     public ArrayList<ConnexionPoint> getConnexionPoints() {
         return connexionPoints;
     }
+
     public void addConnexionPoints(){
 
+    }
+    public void select(){
+        //Nothing by default
+    }
+    public void deselect() {
+        //Nothing by default
     }
 
 }

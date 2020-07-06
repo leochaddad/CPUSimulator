@@ -1,5 +1,6 @@
 package br.maua.ui.elements.shapes;
 
+import br.maua.ui.elements.mouselogic.interfaces.Selectable;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
@@ -7,17 +8,17 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Polyline;
 import javafx.scene.transform.Rotate;
 
-public class Arrow extends Group {
+public class Arrow extends Group implements Selectable {
 
-    private Polyline arrowLine = new Polyline();
-    private Polygon arrowHead = new Polygon();
+    private final Polyline arrowLine = new Polyline();
+    private final Polygon arrowHead = new Polygon();
     private final double ARROWHEAD_SIZE = 22;
     Rotate rotate = new Rotate();
 
-    private SimpleDoubleProperty x1 = new SimpleDoubleProperty();
-    private SimpleDoubleProperty y1 = new SimpleDoubleProperty();
-    private SimpleDoubleProperty x2 = new SimpleDoubleProperty();
-    private SimpleDoubleProperty y2 = new SimpleDoubleProperty();
+    private final SimpleDoubleProperty x1 = new SimpleDoubleProperty();
+    private final SimpleDoubleProperty y1 = new SimpleDoubleProperty();
+    private final SimpleDoubleProperty x2 = new SimpleDoubleProperty();
+    private final SimpleDoubleProperty y2 = new SimpleDoubleProperty();
 
     public Arrow(double x1, double y1, double x2, double y2) {
         arrowLine.setStrokeWidth(14);
@@ -107,5 +108,20 @@ public class Arrow extends Group {
 
     public SimpleDoubleProperty y2Property() {
         return y2;
+    }
+
+    @Override
+    public Group selectableWho() {
+        return this;
+    }
+
+    @Override
+    public void select() {
+
+    }
+
+    @Override
+    public void deselect() {
+
     }
 }

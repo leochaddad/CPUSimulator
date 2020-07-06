@@ -1,8 +1,7 @@
 package br.maua;
 
-import br.maua.ui.elements.components.AluComponent;
-import br.maua.ui.elements.components.BusComponent;
 import br.maua.ui.elements.components.RegisterComponent;
+import br.maua.ui.elements.mouselogic.controllers.MultiplePaneDragController;
 import br.maua.ui.panes.creator.CreatorController;
 import br.maua.ui.panes.creator.CreatorView;
 import javafx.application.Application;
@@ -82,10 +81,9 @@ public class App extends Application {
         CreatorView cv = new CreatorView();
         CreatorController controller = new CreatorController(cv);
         cv.initialize();
-        controller.addElement(new RegisterComponent());
-        controller.addElement(new BusComponent());
-        controller.addElement(new AluComponent());
-        controller.buildDragHandlers();
+        //controller.addElement(new RegisterComponent());
+//        controller.addElement(new BusComponent());
+//        controller.addElement(new AluComponent());
         Scene scene = new Scene(cv);
         stage.setMinWidth(1000);
         stage.setMinHeight(700);

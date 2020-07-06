@@ -10,8 +10,8 @@ import java.util.Collections;
 public class Memory extends Connectable implements Controllable {
 
 
-    private int memorySize = 16;
-    private ArrayList<String> memoryContents = new ArrayList<>();
+    private final int memorySize = 16;
+    private final ArrayList<String> memoryContents = new ArrayList<>();
     private Connectable dataPort;
     private Connectable adressPort;
     private boolean readEnable = false;
@@ -63,7 +63,7 @@ public class Memory extends Connectable implements Controllable {
                 System.out.println("null");
             }
             else {
-                System.out.println(data.toString());
+                System.out.println(data);
             }
 
         }

@@ -23,7 +23,7 @@ public class Trapezoid extends Group {
         svgPath.setFill(Color.YELLOW);
         svgPath.setStrokeWidth(1);
         svgPath.setStroke(Color.BLACK);
-        this.shape = (Shape) svgPath;
+        this.shape = svgPath;
     }
 
 }

@@ -16,7 +16,7 @@ public abstract class Connectable implements Observer, Setup {
         return name;
     }
 
-    private String name;
+    private final String name;
 
     /**
      * Data being outputted

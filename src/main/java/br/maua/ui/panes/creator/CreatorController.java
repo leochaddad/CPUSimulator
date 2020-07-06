@@ -1,116 +1,30 @@
 package br.maua.ui.panes.creator;
-
 import br.maua.ui.elements.Component;
 import br.maua.ui.elements.ComponentFactory;
-
-import br.maua.ui.elements.internalparts.connexionpoint.ConnexionPointController;
-import javafx.event.Event;
-import javafx.event.EventHandler;
+import br.maua.ui.elements.components.AluComponent;
+import br.maua.ui.elements.mouselogic.controllers.MultiplePaneDragController;
+import br.maua.ui.enums.ComponentType;
 import javafx.scene.Group;
-import javafx.scene.input.*;
-
 
 public class CreatorController {
 
-
-    public CreatorController(CreatorView view) {
-        this.view = view;
-        buildDragHandlers();
+    public CreatorController(CreatorView creatorView) {
+        this.creatorView = creatorView;
+        addAvailableComponent(new AluComponent());
     }
 
-    private CreatorView view;
-    private EventHandler<DragEvent> elementDragDropped;
-    private EventHandler<DragEvent> elementDragOverCreationArea;
+    private final CreatorView creatorView;
 
 
-    private Event firstDragEvent;
-    private Group draggedElement;
-
-    //Adds drag detection to elements in elements pane
-    public void addElement(Group element) {
-        view.getElementsArea().getChildren().add(element);
-        addExternalActionHandlers(element);
+    public void addAvailableComponent(Component component){
+        new MultiplePaneDragController(component, this::addElementToCreationArea,creatorView.getCreationAreaAnchorPane());
+        creatorView.getAvailableComponentsBox().getChildren().add(component);
     }
 
-    //Handles drag detection between panes
-    public void addExternalActionHandlers(Group element) {
-        element.setOnDragDetected(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-
-                view.getCreationArea().setOnDragOver(elementDragOverCreationArea);
-                view.getCreationArea().setOnDragDropped(elementDragDropped);
-
-                draggedElement = (Group) event.getSource();
-
-                view.setDraggedElement(draggedElement);
-
-                ClipboardContent content = new ClipboardContent();
-
-                content.putString(view.getDraggedElement().toString());
-                view.getDraggedElement().startDragAndDrop(TransferMode.ANY).setContent(content);
-                firstDragEvent = event;
-
-            }
-        });
+    public void addElementToCreationArea(Group component, double x, double y){
+        ComponentType type = ((Component)component).getComponentType();
+        Component componentToAdd = new ComponentFactory().newComponentAt(type,x,y);
+        creatorView.getCreationAreaAnchorPane().getChildren().add(componentToAdd);
     }
 
-
-    public void buildDragHandlers() {
-
-        elementDragOverCreationArea = new EventHandler<DragEvent>() {
-            public void handle(DragEvent event) {
-                event.acceptTransferModes(TransferMode.ANY);
-                event.consume();
-            }
-        };
-
-        elementDragDropped = new EventHandler<DragEvent>() {
-            public void handle(DragEvent event) {
-                event.setDropCompleted(true);
-                view.getCreationArea().removeEventHandler(DragEvent.DRAG_OVER, elementDragOverCreationArea);
-                view.getCreationArea().removeEventHandler(DragEvent.DRAG_DROPPED, elementDragDropped);
-                view.getDraggedElement().setVisible(true);
-                event.consume();
-                int newPositionX = (int) Math.ceil((event.getX() / 1) - draggedElement.getBoundsInLocal().getCenterX());
-                int newPositionY = (int) Math.ceil((event.getY() / 1) - draggedElement.getBoundsInLocal().getCenterY());
-
-                if (!((Group) firstDragEvent.getSource()).getParent().equals(view.getCreationArea())) {
-                    //Creates new element if it comes from the left pane
-                    if (draggedElement instanceof Component) {
-                        Component elementToAdd = new ComponentFactory().createNewDraggable(((Component) draggedElement).getComponentType());
-                        elementToAdd.setLayoutX(newPositionX);
-                        elementToAdd.setLayoutY(newPositionY);
-                        view.getCreationArea().getChildren().add(elementToAdd);
-                        //Adds internal handlers
-                          //addInternalActionHandlers(elementToAdd);
-                        new DraggableController(elementToAdd);
-                        //Adds connexion point handlers
-                        elementToAdd.getConnexionPoints().forEach(cp -> new ConnexionPointController(cp, view.getCreationArea()));
-                    }
-                }
-            }
-        };
-
-        view.setOnDragDone(new EventHandler<DragEvent>() {
-            @Override
-            public void handle(DragEvent event) {
-                view.getCreationArea().removeEventHandler(DragEvent.DRAG_OVER, elementDragOverCreationArea);
-                view.getCreationArea().removeEventHandler(DragEvent.DRAG_DROPPED, elementDragDropped);
-                view.getDraggedElement().setVisible(true);
-                event.consume();
-            }
-        });
-
-    }
 }
-
-
-
-
-
-
-
-
-
-

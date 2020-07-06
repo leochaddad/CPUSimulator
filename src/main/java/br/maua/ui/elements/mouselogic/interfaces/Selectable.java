@@ -3,23 +3,38 @@ package br.maua.ui.elements.mouselogic.interfaces;
 
 import javafx.scene.Group;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
 public interface Selectable {
 
-    public Group selectableWho();
+    default boolean selectableEnabled(){return false;}
 
-    default public void select(){
+    Group selectableWho();
+
+    default void styleAsSelected(){
         DropShadow shadow = new DropShadow();
         shadow.setColor(Color.SKYBLUE);
         shadow.setSpread(0.5);
         shadow.setRadius(5);
-
+        ((Connectable)selectableWho()).setConnectEnabled(true);
         selectableWho().setEffect(shadow);
-    };
+    }
 
-    default public void deselect(){
+    default void styleAsDeselected(){
         selectableWho().setEffect(null);
-    };
+    }
+
+    void select();
+    void deselect();
+
+    default void setSelectEnabled(boolean selectEnabled){
+        if(!selectEnabled){
+            selectableWho().addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {});
+        }
+        else {
+            selectableWho().removeEventHandler(MouseEvent.MOUSE_CLICKED, event -> {});
+        }
+    }
 
 }
