@@ -10,10 +10,7 @@ public interface Resizable {
     ArrayList<DragHandle> getDragHandles();
     void addHandles();
     void extendX(double x);
-    void extendY(double y);
-
     default void setResizeEnabled(boolean resizeEnabled){
         getDragHandles().forEach(dh->dh.setVisible(resizeEnabled));
     }
-
 }

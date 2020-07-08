@@ -110,10 +110,6 @@ public class Arrow extends Group implements Selectable {
         return y2;
     }
 
-    @Override
-    public Group selectableWho() {
-        return this;
-    }
 
     @Override
     public void select() {

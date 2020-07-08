@@ -1,5 +1,6 @@
 package br.maua.ui.elements.internalparts.connexionpoint;
 import br.maua.ui.enums.ConnexionPointType;
+import br.maua.ui.panes.creator.CreatorView;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Group;
 import javafx.scene.layout.AnchorPane;
@@ -19,6 +20,7 @@ public class ConnexionPoint extends Group {
         this.setLayoutX(this.positionX);
         this.setLayoutY(this.positionY);
         setStyles();
+        controller = new ConnexionPointController(this, CreatorView.getCreationAreaAnchorPane());
     }
 
 

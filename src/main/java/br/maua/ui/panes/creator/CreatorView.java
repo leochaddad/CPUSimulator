@@ -13,7 +13,7 @@ public class CreatorView extends AnchorPane {
         return availableComponentsBox;
     }
 
-    public AnchorPane getCreationAreaAnchorPane() {
+    public static AnchorPane getCreationAreaAnchorPane() {
         return creationAreaAnchorPane;
     }
 
@@ -23,7 +23,7 @@ public class CreatorView extends AnchorPane {
 
 
     private final ScrollPane creationAreaScrollPane = new ScrollPane();
-    private final AnchorPane creationAreaAnchorPane = new AnchorPane();
+    private static final AnchorPane creationAreaAnchorPane = new AnchorPane();
     private final VBox availableComponentsBox = new VBox();
     private final ScrollPane availableComponentsScrollPane = new ScrollPane();
     private final HBox hBox = new HBox();
@@ -41,6 +41,7 @@ public class CreatorView extends AnchorPane {
         availableComponentsBox.paddingProperty().setValue(new Insets(10));
 
         availableComponentsScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+
         availableComponentsBox.getTransforms().add(new Scale(0.6,0.6));
 
         hBox.prefWidthProperty().bind(this.widthProperty());

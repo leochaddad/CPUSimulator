@@ -29,6 +29,7 @@ public class DragHandleController {
                     handle.addEventHandler(MouseEvent.MOUSE_DRAGGED,handleDrag);
                     handle.addEventHandler(MouseEvent.MOUSE_RELEASED,handleReleased);
                 }
+                event.consume();
         }
         });
 
@@ -41,6 +42,7 @@ public class DragHandleController {
                     handle.setCursor(Cursor.V_RESIZE);
 
                 }
+                event.consume();
             }
         });
 
@@ -54,8 +56,7 @@ public class DragHandleController {
                     ((Resizable)handle.getParent()).extendX(event.getX());
                 }
                 else if (handle.type.equals(DragHandleType.VERTICAL)){
-                    ((Resizable)handle.getParent()).extendY(event.getY());
-
+                    //Resize vertical if implemented...
                 }
             }
         };

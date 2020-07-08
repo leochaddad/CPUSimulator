@@ -5,7 +5,7 @@ import br.maua.ui.enums.ComponentType;
 
 public class ComponentFactory {
 
-    public Component newComponent(ComponentType type){ //Factory
+     public static Component newComponent(ComponentType type){ //Factory
         Component returnType = null;
         switch (type){
             case ALU:returnType = new AluComponent();
@@ -26,7 +26,7 @@ public class ComponentFactory {
         return returnType;
     }
 
-    public Component newComponentAt(ComponentType type, Double x, Double y){
+    public static Component newComponentAt(ComponentType type, Double x, Double y){
         Component component = newComponent(type);
         component.setLayoutX(x);
         component.setLayoutY(y);

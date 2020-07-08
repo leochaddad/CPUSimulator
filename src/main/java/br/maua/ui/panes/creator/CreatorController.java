@@ -1,15 +1,10 @@
 package br.maua.ui.panes.creator;
 import br.maua.ui.elements.components.Component;
-import br.maua.ui.elements.components.ComponentFactory;
 import br.maua.ui.elements.components.simple.AluComponent;
 import br.maua.ui.elements.components.simple.BusComponent;
+import br.maua.ui.elements.components.simple.CounterComponent;
 import br.maua.ui.elements.components.simple.RegisterComponent;
-import br.maua.ui.elements.internalparts.connexionpoint.ConnexionPointController;
-import br.maua.ui.elements.components.controllers.DragController;
-import br.maua.ui.elements.components.controllers.MultiplePaneDragController;
-import br.maua.ui.elements.components.controllers.SelectableController;
-import br.maua.ui.enums.ComponentType;
-import javafx.scene.Group;
+import br.maua.ui.enums.ComponentContext;
 
 public class CreatorController {
 
@@ -18,24 +13,16 @@ public class CreatorController {
         addAvailableComponent(new AluComponent());
         addAvailableComponent(new BusComponent());
         addAvailableComponent(new RegisterComponent());
+        addAvailableComponent(new CounterComponent());
     }
 
     private final CreatorView creatorView;
 
-
     public void addAvailableComponent(Component component){
-        new MultiplePaneDragController(component, this::addElementToCreationArea,creatorView.getCreationAreaAnchorPane());
+        component.setContext(ComponentContext.ON_DISPLAY);
         creatorView.getAvailableComponentsBox().getChildren().add(component);
     }
 
-    public void addElementToCreationArea(Group component, double x, double y){
-        ComponentType type = ((Component)component).getComponentType();
-        Component componentToAdd = new ComponentFactory().newComponentAt(type,x,y);
-        creatorView.getCreationAreaAnchorPane().getChildren().add(componentToAdd);
-        new DragController(componentToAdd);
-        new SelectableController(componentToAdd);
-        componentToAdd.addConnexionPoints();
-        componentToAdd.getConnexionPoints().forEach(connexionPoint -> new ConnexionPointController(connexionPoint,creatorView.getCreationAreaAnchorPane() ));
-    }
+
 
 }
